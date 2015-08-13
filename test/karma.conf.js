@@ -23,7 +23,6 @@ module.exports = function(config) {
     files: [
       // bower:js
       'bower_components/angular/angular.js',
-      'bower_components/web-animations-js/web-animations.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

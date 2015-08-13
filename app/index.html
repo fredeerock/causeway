@@ -5,21 +5,32 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
+
     <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
 
   </head>
   <body ng-app="causewayApp" >
 
-    <div id="textContainer" onclick="zoomOutUp(this, 1)">
-      <span id="textContainerText">Causeway</span>
-    </div>
+<div id="textContainer" onclick="zoomOutUp(this, 1)">
+<span>Vincent A. Cellucci<span>
+
+
+<span>Causeway<span> 
+ 
+    <span>More important than having<span>  
+    been born is your city 
+    the scale upon which your 
+    heart when you die will 
+    be weighed  
+                        Alice Notley 
+ 
+ 
+                           iff 
+ 
+                                  there no more penicillin 
+“you don’t believe that yourself” 
+ 
+</div>
 
     <script>
 
@@ -32,54 +43,48 @@
               transform: 'none', 
               opacity: '1', 
               transformOrigin: 'center bottom', 
-              offset: 0
+              // offset: 0
             }, 
           
             {
               transform: 'scale3d(.475, .475, .475) translate3d(0, 60px, 0)', 
               opacity: '1', 
               transformOrigin: 'center bottom', 
-              offset: 0.5
+              // offset: 0.5
             },
           
             {
               transform: 'scale3d(.1, .1, .1) translate3d(0, -2000px, 0)', 
               opacity: '0', 
               transformOrigin: 'center bottom', 
-              offset: 1
+              // offset: 1
             }
 
           ];
 
         var timing = {
-          duration: 5000, 
+          duration: 3000, 
           iterations: iterations, 
-          // easing: 'ease'
           easing: 'cubic-bezier(0.550, 0.055, 0.675, 0.190)'
-          // easing: 'steps(10, 0.5)'
 
         };
 
         return elem.animate(keyframes, timing);        
       }
-      
 
     </script>
 
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/web-animations-js/web-animations.min.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="bower_components/angular/angular.js"></script>
+
+
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <!-- endbuild -->
 
     <script>      
-      window.onload = zoomOutUp(document.getElementById("textContainer"), Infinity);
+      // window.onload = zoomOutUp(document.getElementById("textContainer"), 2);
+      window.onload = zoomOutUp(document.getElementsByTagName("span"), Infinity);
+
     </script>
 
 </body>
