@@ -1,5 +1,9 @@
 {
-  "name": "causeway",
+  "name": "test",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "~3.2.0",
+    "mocha": "~2.2.5"
+  }
 }
