@@ -1,4 +1,4 @@
-/*body {
+body {
   display: flex;
   flex-flow: column;
   width: 100vw;
@@ -9,16 +9,14 @@
   font-family: RobotoDraft,Helvetica,Arial,sans-serif;
   font-weight: 300;
 }
+
 #causeway-text {
   align-self: center;
   font-size: 14px;
   white-space: pre;
-}*/
-
-/*
-#causeway-text span{
-  align-self: center;
-  font-size: 14px;
-  white-space: pre;
 }
-*/
+
+span {
+	display: inline-block;
+	/*position: relative;*/
+}
