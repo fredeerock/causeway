@@ -1,29 +1,22 @@
 body {
-  background: #fafafa;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #333;
+  display: flex;
+  flex-flow: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  font-family: RobotoDraft,Helvetica,Arial,sans-serif;
+  font-weight: 300;
+}
+#textContainer {
+  align-self: center;
+  font-size: 14px;
+  white-space: pre;
 }
 
-.hero-unit {
-  margin: 50px auto 0 auto;
-  width: 300px;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
-}
-
-.hero-unit h1 {
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-}
-
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+#textContainer span{
+  align-self: center;
+  font-size: 14px;
+  white-space: pre;
 }
