@@ -9,13 +9,13 @@ body {
   font-family: RobotoDraft,Helvetica,Arial,sans-serif;
   font-weight: 300;
 }
-#textContainer {
+#causeway-text {
   align-self: center;
   font-size: 14px;
   white-space: pre;
 }
 
-#textContainer span{
+#causeway-text span{
   align-self: center;
   font-size: 14px;
   white-space: pre;
