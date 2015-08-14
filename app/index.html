@@ -12,17 +12,14 @@
   <body ng-app="causewayApp" >
 
 <div id="textContainer" onclick="zoomOutUp(this, 1)">
-<span>Vincent A. Cellucci<span>
-
-
 <span>Causeway<span> 
  
-    <span>More important than having<span>  
-    been born is your city 
-    the scale upon which your 
-    heart when you die will 
-    be weighed  
-                        Alice Notley 
+    <span>More<span> <span>important</span> <span>than having</span>  
+    <span>been</span> <span>born</span> <span>is your city</span> 
+    <span>the scale</span> <span>upon which</span> <span>your 
+    heart</span> <span>when you die</span> <span>will 
+    be weighed</span>  
+                        <span>Alice Notley<span> 
  
  
                            iff 
@@ -72,6 +69,9 @@
         return elem.animate(keyframes, timing);        
       }
 
+      window.onload = zoomOutUp(document.getElementsByTagName("span"), Infinity);
+
+
     </script>
 
 
@@ -83,7 +83,6 @@
 
     <script>      
       // window.onload = zoomOutUp(document.getElementById("textContainer"), 2);
-      window.onload = zoomOutUp(document.getElementsByTagName("span"), Infinity);
 
     </script>
 
