@@ -1,12 +1,14 @@
 // jshint devel:true
 
-$("#causeway-text").load("../data/causeway.html", function() {
-	done();
-});
+// $("#causeway-text").load("../data/causeway.html", function() {
+// });
 
-function done(){
+
+
 	$("span").click(function () {
 		$(this).css("background-color","yellow");
+		$(this).animate({left: '250px'});
+		// zoomOutUp(this, 1);
 	});
 
 	function zoomOutUp(elem, iterations) {
@@ -42,7 +44,6 @@ function done(){
 
 		return elem.animate(keyframes, timing);
 	}
-}
 
 // window.onload = zoomOutUp(document.getElementsByTagName("span"), Infinity);
 

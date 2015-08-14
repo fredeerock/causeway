@@ -1,4 +1,4 @@
-body {
+/*body {
   display: flex;
   flex-flow: column;
   width: 100vw;
@@ -13,10 +13,12 @@ body {
   align-self: center;
   font-size: 14px;
   white-space: pre;
-}
+}*/
 
+/*
 #causeway-text span{
   align-self: center;
   font-size: 14px;
   white-space: pre;
 }
+*/
