@@ -1,12 +1,12 @@
 body {
-	display: flex;
-	flex-flow: column;
-	width: 100vw;
-	height: 100vh;
+	/*display: flex;*/
+	/*flex-flow: column;*/
+	/*width: 100vw;*/
+	/*height: 100vh;*/
 	/*overflow: hidden;*/
 	align-items: center;
 	justify-content: center;
-	font-family: RobotoDraft,Helvetica,Arial,sans-serif;
+	font-family: Helvetica,Arial,sans-serif;
 	font-weight: 300;
 }
 
@@ -14,8 +14,8 @@ body {
 	/*align-self: center;*/
 	font-size: 14px;
 	/*overflow: hidden;*/
-	/*white-space: nowrap;*/
-	/*white-space: pre;*/
+	/*white-space: wrap;*/
+	white-space: pre;
 
 }
 
