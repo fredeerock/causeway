@@ -14,17 +14,32 @@ $("#causeway-text").load("../data/causeway.txt", function() {
         var keyframes = [
 
             {
-              transform: 'none',
-              opacity: '1',
-              transformOrigin: 'center bottom',
-              offset: 0
+            transform: 'none',
+            opacity: '1',
+            transformOrigin: 'center bottom',
+            offset: 0
             },
 
             {
-              transform: 'scale3d(.475, .475, .475) translate3d(0, 60px, 0)',
-              opacity: '1',
-              transformOrigin: 'center bottom',
-              offset: 0.4
+            transform: 'scale3d(.475, .475, .475) translate3d(0, 60px, 0)',
+            opacity: '1',
+            transformOrigin: 'center bottom',
+            offset: 0.4
+            },
+
+            {
+            transform: 'scale3d(.475, .475, .475) translate3d(0, 60px, 0)',
+            opacity: '1',
+            transformOrigin: 'center bottom',
+            offset: 0.4
+            },
+
+
+            {
+            transform: 'scale3d(.475, .475, .475) translate3d(0, 60px, 0)',
+            opacity: '1',
+            transformOrigin: 'center bottom',
+            offset: 0.4
             },
 
             {
