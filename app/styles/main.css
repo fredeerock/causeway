@@ -23,3 +23,24 @@ body {
 	/*white-space: pre;*/
 	display: inline-block;
 }
+
+.myClass{
+	animation-name: pulse;
+	animation-duration: 3s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes pulse{
+	0%{
+		font-size: 1em;
+
+	}
+
+	75%{
+		font-size: 2em;
+	}
+
+	100%{
+		font-size: 2.1em;
+	}
+}
