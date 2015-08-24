@@ -1,21 +1,23 @@
 body {
-	/*display: flex;*/
+	display: flex;
 	/*flex-flow: column;*/
 	/*width: 100vw;*/
 	/*height: 100vh;*/
 	/*overflow: hidden;*/
 	align-items: center;
 	justify-content: center;
-	font-family: Helvetica,Arial,sans-serif;
-	font-weight: 300;
+	font-family: 'Vollkorn', serif;
+	/*line-height: 5.7em;*/
+	font-size: 1.0em;
+	/*font-weight: 300;*/
 }
 
 .causeway-text {
 	/*align-self: center;*/
-	font-size: 14px;
+	font-size: 1.2em;
 	/*overflow: hidden;*/
 	/*white-space: wrap;*/
-	white-space: pre-line;
+	white-space: pre;
 
 }
 
@@ -33,18 +35,22 @@ body {
 @keyframes zoomOutUp{
 	50%{
 		opacity: 1;
-		transform: scale3d(.475, .475, .475) translate3d(0px, 60px, 0);
+		transform: rotateZ(10deg) scale3d(.475, .475, .475) translate3d(0px, 60px, 0);
+				/*transform-origin: center bottom;*/
+
 		animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
 
 	}
 
 	75%{
-		transform: scale3d(.475, .475, .475) translate3d(-100px, -50px, 0);
+		transform: rotateZ(-10deg) scale3d(.475, .475, .475) translate3d(-100px, -50px, 0);
+				/*transform-origin: center bottom;*/
+
 	}
 
 	100%{
-		opacity: 0.5;
-		transform: scale3d(.1, .1, .1) translate3d(200px, -2000px, 0);
+		opacity: 0;
+		transform: rotateZ(40deg) scale3d(.1, .1, .1) translate3d(200px, -2000px, 0);
 		transform-origin: center bottom;
 		animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
 	}
