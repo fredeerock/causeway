@@ -1,0 +1,26 @@
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Vollkorn', serif;
+	font-size: 1.2em;
+	background-color: black;
+	color: white;
+}
+
+.causeway-text {
+	white-space: pre;
+
+}
+
+.causeway-text span {
+	display: inline-block;
+}
+
+.symbol {
+	font-size: 3.0em;
+}
+
+small {
+	font-size: 0.5em;
+}

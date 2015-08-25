@@ -74,33 +74,28 @@ var currentSection = 0;		// current section.
 	// Respond to web sockets with socket.on
 io.sockets.on('connection', function (socket) {
 	var ioClientCounter = 0;		// Can I move this outside into global vars?
-	
-	// .emit to send message back to caller.
-	socket.emit('chat', 'SERVER: ' + 'You have connected');
-	// .broadcast to send message to all sockets.
-	socket.broadcast.emit('chat', 'SERVER: ' + socket.id + ' is on deck');
 
-	// socket.on('addme',function(username) {
-	// 	if(username != "admin") {
-	// 		ioClients.push(socket.id);
-	// 	}
-	// 	socket.username = username;  // allows the username to be retrieved anytime the socket is used
-	// 	// Can add any other pertinent details to the socket to be retrieved later
-	// 	// socket.location, etc.
-	// 	var userColor = "#0af";
-	// 	socket.userColor = userColor;
-	// 	// .emit to send message back to caller.
-	// 	socket.emit('chat', 'SERVER: ' + 'You have connected');
-	// 	// .broadcast to send message to all sockets.
-	// 	socket.broadcast.emit('chat', 'SERVER: ' + socket.id + ' is on deck');
-	// 	socket.emit('bump', socket.username, "::dude::");
-	// 	var title = getSection(currentSection);
-	// 	socket.emit('setSection', currentSection, title);
-	// });
+	socket.on('addme',function(username) {
+		if(username != "admin") {
+			ioClients.push(socket.id);
+		}
+		socket.username = username;  // allows the username to be retrieved anytime the socket is used
+		// Can add any other pertinent details to the socket to be retrieved later
+		// socket.location, etc.
+		var userColor = "#0af";
+		socket.userColor = userColor;
+		// .emit to send message back to caller.
+		socket.emit('chat', 'SERVER: ' + username + " " + socket.id + 'You have connected');
+		// .broadcast to send message to all sockets.
+		socket.broadcast.emit('chat', 'SERVER: ' + username + " " + socket.id + ' is on deck');
+		socket.emit('bump', socket.username, "::dude::");
+		var title = getSection(currentSection);
+		socket.emit('setSection', currentSection, title);
+	});
 
 	 socket.on('disconnect', function() {
 			// ioClients.remove(socket.id);	// FIXME: Remove client if they leave
-			io.sockets.emit('chat', 'SERVER' + socket.id + ' has left the building');
+			io.sockets.emit('chat', 'SERVER: ' + socket.id + ' has left the building');
 	 });
 
 	 socket.on('sendchat', function(data) {
