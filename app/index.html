@@ -24,20 +24,30 @@
 				console.log("chat: " + data);
 			});
 
+			var rcolor =  getRandomColor();
 			socket.on('itemback', function(data){
 				var elements = document.getElementsByClassName(data);
 				for(var i = elements.length - 1; i >= 0; --i) {
 					elements[i].className += " clicked";
+					elements[i].style.color = rcolor;
+					elements[i].style.backgroundColor = rcolor;
 				}
 			});
 
+			function getRandomColor() {
+			    var letters = '0123456789ABCDEF'.split('');
+			    var color = '#';
+			    for (var i = 0; i < 6; i++ ) {
+			        color += letters[Math.floor(Math.random() * 16)];
+			    }
+			    return color;
+			}
+
 			function clickgo() {
 				var elements = document.getElementsByClassName(this.className);
-				console.log(this);
 				for(var i = elements.length - 1; i >= 0; --i) {
-					// var items = toString(elements[i].className);
 					socket.emit('item', elements[i].className.split(" ")[1]);
-					console.log(elements[i].className.split(" ")[1]);
+					// console.log(elements[i].className.split(" ")[1]);
 					elements[i].className += " clicked";
 				}
 			}

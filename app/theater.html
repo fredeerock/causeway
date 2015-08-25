@@ -20,6 +20,17 @@
 			console.log(data);
 		});
 
+		socket.on('itemback', function(data){
+			console.log("itemback: " + data);
+			var elements = document.getElementsByClassName(data);
+			for(var i = elements.length - 1; i >= 0; --i) {
+				// elements[i].className += " clicked";
+				// elements[i].style.visibility = visible;
+				elements[i].style.color = "white";
+				// elements[i].style.backgroundColor = rcolor;
+			}
+		});
+
 		window.onload = function() {
 			var xhr= new XMLHttpRequest();
 			xhr.open('GET', 'data/causeway.html', true);
