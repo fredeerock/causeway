@@ -473,8 +473,8 @@ Towbin, Egg Nog, Louisa, Mumpsie, Dan, Mike, Blake, Dedi, StevO, Anna Banana, Wa
 
 			var socket = io.connect('http://localhost:8000');
 
-			socket.on('from server', function(data){console.log(data);
-
+			socket.on('chat', function(data){
+				// console.log(data);
 			});
 
 			function clickgo() {
@@ -490,14 +490,12 @@ Towbin, Egg Nog, Louisa, Mumpsie, Dan, Mike, Blake, Dedi, StevO, Anna Banana, Wa
 
 			window.onload = function() {
 				
-				console.log("loaded");
-
 				var spans = document.getElementsByClassName('phrase');
-					for (var i = 0; i < spans.length; i++) {
-						spans[i].addEventListener('click', clickgo, false);
-						spans[i].addEventListener("touchstart", clickgo, false);
-
+				for (var i = 0; i < spans.length; i++) {
+					spans[i].addEventListener('click', clickgo, false);
+					spans[i].addEventListener("touchstart", clickgo, false);
 				}
+
 			};
 
 		</script>

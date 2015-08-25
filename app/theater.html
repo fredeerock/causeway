@@ -3,8 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Causeway | Theater</title>
+	<script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-	
+	<script>
+
+ 		var socket = io.connect('http://localhost:8000');
+		
+		socket.on('chat', function(data) {
+			console.log(data);
+		});
+
+	</script>
 </body>
 </html>
