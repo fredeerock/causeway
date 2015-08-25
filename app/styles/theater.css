@@ -8,12 +8,12 @@ body {
 	color: white;
 }
 
-.causeway-text {
+#causeway-text {
 	white-space: pre;
 
 }
 
-.causeway-text span {
+#causeway-text span {
 	display: inline-block;
 }
 

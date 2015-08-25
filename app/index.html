@@ -21,17 +21,24 @@
 			socket.emit('addme', "a_user");
 
 			socket.on('chat', function(data){
-				console.log(data);
+				console.log("chat: " + data);
+			});
+
+			socket.on('itemback', function(data){
+				var elements = document.getElementsByClassName(data);
+				for(var i = elements.length - 1; i >= 0; --i) {
+					elements[i].className += " clicked";
+				}
 			});
 
 			function clickgo() {
 				var elements = document.getElementsByClassName(this.className);
-
+				console.log(this);
 				for(var i = elements.length - 1; i >= 0; --i) {
-					var items = toString(elements[i].className);
+					// var items = toString(elements[i].className);
 					socket.emit('item', elements[i].className.split(" ")[1]);
 					console.log(elements[i].className.split(" ")[1]);
-					elements[i].className = "clicked";
+					elements[i].className += " clicked";
 				}
 			}
 
@@ -42,16 +49,16 @@
 				xhr.onreadystatechange= function() {
 				    if (this.readyState!==4) return;
 				    if (this.status!==200) return; // or whatever error handling you want
-				    document.getElementById('causeway-text').innerHTML= this.responseText;
+				    document.getElementById("causeway-text").innerHTML= this.responseText;
 				    addEvents();
 				};
 				xhr.send();
 
 				function addEvents() {
-					var spans = document.getElementsByClassName('phrase');
-					for (var i = 0; i < spans.length; i++) {
-						spans[i].addEventListener('click', clickgo, false);
-						spans[i].addEventListener("touchstart", clickgo, false);
+					var phrases = document.getElementsByClassName('phrase');
+					for (var i = 0; i < phrases.length; i++) {
+						phrases[i].addEventListener("click", clickgo, false);
+						phrases[i].addEventListener("touchstart", clickgo, false);
 					}
 				}
 

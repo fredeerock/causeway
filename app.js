@@ -124,6 +124,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('item' , function(data) {
 		console.log("item: " + data);
 		socket.broadcast.emit('chat', socket.id + " : " + data, 1);
+		socket.broadcast.emit('itemback', data, 1);
 	});
 
 	socket.on('slider', function(data) {
