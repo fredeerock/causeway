@@ -1,3 +1,0 @@
-// jshint devel:true
-
-
