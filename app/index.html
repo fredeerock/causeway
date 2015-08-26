@@ -9,11 +9,17 @@
 
 		<link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
 
-		<script src="http://jsconsole.com/remote.js?C071E99F-CB78-44C5-A203-76979661538D"></script>
-
 		<script src="/socket.io/socket.io.js"></script>
 	</head>
 	<body>
+
+		<div id="welcome">
+			<h1>Causeway</h1>
+			<p>Words | <strong>Vincent A. Cellucci</strong></p>
+			<p>Audio | <strong>Jesse Allison</strong></p>
+			<p>Visuals | <strong>Derick Ostrenko</strong></p>
+			<p><em>Instructions: Tapping is the new snapping.</em></p>
+		</div>
 
 		<div id="causeway-text"></div>
 
@@ -27,11 +33,21 @@
 			});
 
 			socket.on('setSection', function(data) {
+				console.log(data);
 				console.log("the section is now: " + data.title);
+				
 				if(data.title !== undefined){
 					hidedivs(data.sect);
 					scrollto2(data.sect);
+
 				}
+
+				if(data.title == 'Welcome') {
+					console.log('yep');
+					document.getElementById("welcome").style.display = "block";
+				}
+
+				
 			});
 
 			function hidedivs(section){

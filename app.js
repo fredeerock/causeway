@@ -42,7 +42,7 @@ oscServer.on("message", function (msg, rinfo) {
 });
 
 		// oscClient is used to send osc messages (to Max)
-var oscClient = new osc.Client('127.0.0.1', 7745);
+var oscClient = new osc.Client('167.96.108.219', 7745);
 
 
 	// server is the node server (web app via express)
@@ -125,6 +125,7 @@ io.sockets.on('connection', function (socket) {
 		console.log("item: " + data);
 		socket.broadcast.emit('chat', socket.id + " : " + data, 1);
 		socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
+		oscClient.send('/causeway/phrase/number', data, socket.userColor);
 	});
 
 	socket.on('slider', function(data) {
@@ -185,20 +186,21 @@ io.sockets.on('connection', function (socket) {
 
 	getSection = function(sect) {
 		var title = "none";
+		
 		if(sect == 'w'){
+			console.log("wahhhh");
 			title = sectionTitles[0];
 		} 
 
 		if(sect == 'e'){
 			title = sectionTitles[35];
-		} else {
-			if(sectionTitles.length >= sect) {
-				sect++;
-				title = sectionTitles[sect];
-			} else {
-				title = "";
-			}
-		}
+		} 
+
+		if(sect !== 'e' && sect !== 'w') {
+			sect++;
+			title = sectionTitles[sect];
+		} 
+		
 		return title;
 	};
 		// **** 		****

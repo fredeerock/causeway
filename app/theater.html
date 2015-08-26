@@ -9,6 +9,15 @@
 </head>
 <body>
 
+	<div id="welcome">
+			<h1>Causeway</h1>
+			<p>Words | <strong>Vincent A. Cellucci</strong></p>
+			<p>Audio | <strong>Jesse Allison</strong></p>
+			<p>Visuals | <strong>Derick Ostrenko</strong></p>
+			<p><em>Instructions: Tapping is the new snapping.</em></p>
+			<p class ="url">Visit http://dostrenko-2.lsu.edu:8000 on your mobile device to participate.</p>
+	</div>
+
 <div id="causeway-text"></div>
 
 	<script>
@@ -31,6 +40,18 @@
 			}
 		});
 
+		socket.on('setSection', function(data) {
+			console.log("the section is now: " + data.title);
+			if(data.title !== undefined){
+				// hidedivs(data.sect);
+				document.getElementById("welcome").style.display = "none";
+				scrollto(data.sect);
+			} else {
+				console.log("yep");
+				document.getElementById("welcome").style.display = "block";
+			}
+		});
+
 		window.onload = function() {
 			var xhr= new XMLHttpRequest();
 			xhr.open('GET', 'data/causeway.html', true);
@@ -41,6 +62,34 @@
 			};
 			xhr.send();
 		};
+
+		function scrollto(element) {
+				var ele = document.getElementsByClassName("s"+element)[0];
+
+			    if (!!ele && ele.offsetTop > window.scrollY) {
+				    var scrollInterval1 = setInterval(function(){
+				    	console.log('scrolling!');
+				        if(ele.offsetTop > window.scrollY+3) {
+				            window.scrollBy( 0, 12 );
+				        } else {
+				        	clearInterval(scrollInterval1);
+				        }
+
+				    },15);
+				}
+
+				if (!!ele && ele.offsetTop < window.scrollY) {
+				    var scrollInterval2 = setInterval(function(){
+				    	console.log('scrolling!');
+				        if(ele.offsetTop < window.scrollY-3) {
+				            window.scrollBy( 0, -12 );
+				        } else {
+				        	clearInterval(scrollInterval2);
+				        }
+
+				    },15);
+				}
+			}
 
 	</script>
 </body>
