@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Causeway | Controller</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<link rel="stylesheet" href="styles/controller.css">
+</head>
+<body>
+	
+	<div class="buttons">
+		<a href="#" onclick="goto(1000)">Welcome...</a>
+		<a href="#" onclick="goto(0)">Section 00</a>
+		<a href="#" onclick="goto(1)">Section 01</a>
+		<a href="#" onclick="goto(2)">Section 02</a>
+		<a href="#" onclick="goto(3)">Section 03</a>
+		<a href="#" onclick="goto(4)">Section 04</a>
+		<a href="#" onclick="goto(5)">Section 05</a>
+		<a href="#" onclick="goto(6)">Section 06</a>
+		<a href="#" onclick="goto(7)">Section 07</a>
+		<a href="#" onclick="goto(8)">Section 08</a>
+		<a href="#" onclick="goto(9)">Section 09</a>
+		<a href="#" onclick="goto(10)">Section 10</a>
+		<a href="#" onclick="goto(11)">Section 11</a>
+		<a href="#" onclick="goto(12)">Section 12</a>
+		<a href="#" onclick="goto(1001)">.......End</a>
+	</div>
+
+	<script type="text/javascript">
+		var socket = io.connect('http://mbp.local:8000');
+		socket.emit('addme', 'controller');
+		
+		socket.on('chat', function(data) {
+			console.log(data);
+		});
+
+		function goto(num) {
+			console.log(num);
+			socket.emit("section", num);
+		}
+	</script>
+	
+</body>
+</html>

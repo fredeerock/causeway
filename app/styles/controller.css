@@ -1,0 +1,28 @@
+.buttons{
+	width: 50%;
+	background-color: rgb(200, 200, 200);
+	padding: 20px;
+	font-family: monospace;
+}
+
+a{
+	display: inline-block;
+	border: 5px solid red;
+	font-size: 2em;
+	margin: 10px;
+	color: blue;
+}
+
+a:hover{
+	background-color: white;
+	color: red;
+}
+
+a:active{
+	background-color: purple;
+	color: orange;
+}
+
+a:visited{
+	color: purple;
+}
