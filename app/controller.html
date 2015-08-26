@@ -7,10 +7,12 @@
 	<link rel="stylesheet" href="styles/controller.css">
 </head>
 <body>
+
+<h1>Causeway Controller</h1>
 	
 	<div class="buttons">
-		<a href="#" onclick="goto(1000)">Welcome...</a>
-		<a href="#" onclick="goto(0)">Section 00</a>
+		<a href="#" onclick="goto('w')">Welcome...</a>
+		<a href="#" onclick="goto(0)">Preface...</a>
 		<a href="#" onclick="goto(1)">Section 01</a>
 		<a href="#" onclick="goto(2)">Section 02</a>
 		<a href="#" onclick="goto(3)">Section 03</a>
@@ -23,7 +25,29 @@
 		<a href="#" onclick="goto(10)">Section 10</a>
 		<a href="#" onclick="goto(11)">Section 11</a>
 		<a href="#" onclick="goto(12)">Section 12</a>
-		<a href="#" onclick="goto(1001)">.......End</a>
+		<a href="#" onclick="goto(13)">Section 13</a>
+		<a href="#" onclick="goto(14)">Section 14</a>
+		<a href="#" onclick="goto(15)">Section 15</a>
+		<a href="#" onclick="goto(16)">Section 16</a>
+		<a href="#" onclick="goto(17)">Section 05</a>
+		<a href="#" onclick="goto(18)">Section 17</a>
+		<a href="#" onclick="goto(19)">Section 18</a>
+		<a href="#" onclick="goto(20)">Section 19</a>
+		<a href="#" onclick="goto(21)">Section 20</a>
+		<a href="#" onclick="goto(22)">Section 21</a>
+		<a href="#" onclick="goto(23)">Section 22</a>
+		<a href="#" onclick="goto(24)">Section 23</a>
+		<a href="#" onclick="goto(25)">Section 24</a>
+		<a href="#" onclick="goto(26)">Section 25</a>
+		<a href="#" onclick="goto(27)">Section 26</a>
+		<a href="#" onclick="goto(28)">Section 27</a>
+		<a href="#" onclick="goto(29)">Section 28</a>
+		<a href="#" onclick="goto(30)">Section 29</a>
+		<a href="#" onclick="goto(31)">Section 30</a>
+		<a href="#" onclick="goto(32)">Section 31</a>
+		<a href="#" onclick="goto(33)">Section 32</a>
+		<a href="#" onclick="goto(34)">Section 33</a>
+		<a href="#" onclick="goto('e')">.......End</a>
 	</div>
 
 	<script type="text/javascript">
@@ -32,6 +56,10 @@
 		
 		socket.on('chat', function(data) {
 			console.log(data);
+		});
+
+		socket.on('setSection', function(data) {
+			console.log("The section is now: " + data.title);
 		});
 
 		function goto(num) {

@@ -161,32 +161,46 @@ io.sockets.on('connection', function (socket) {
 			// Functions for handling stuff
 
 			// **** SECTIONS ****
-	var sectionTitles = ["Welcome", "Section 1", "Section 2", "Section 3", "Section 4", "Section 5", "Section 6", "End"];
+	var sectionTitles = ["Welcome", "Preface", "Section 1", "Section 2", "Section 3", 
+		"Section 4", "Section 5", "Section 6", "Section 7", "Section 8", "Section 9", 
+		"Section 10", "Section 11", "Section 12", "Section 13", "Section 14", "Section 15",  
+		"Section 16", "Section 17", "Section 18", "Section 19", "Section 20", "Section 21", 
+		"Section 22", "Section 23", "Section 24", "Section 25", "Section 26", "Section 27", 
+		"Section 28", "Section 29", "Section 30", "Section 31", "Section 32", "Section 33", 
+		"End"];
 
 	// Todo: Add sections to correspond to organ interactions
 	// sendSection(currentSection);	 // Sets everyone's section
 	sendSection = function (sect) {
 		var title = getSection(sect);
-
-		io.sockets.emit('setSection', sect + " " + title);
+		io.sockets.emit('setSection', {sect: sect, title: title});
 		oscClient.send('/setSection', sect, title);
-	}
+	};
 
 		// Section shared from Max to UIs
 	shareSection = function(sect) {
 		var title = getSection(sect);
 		io.sockets.emit('setSection', sect, title);
-	}
+	};
 
 	getSection = function(sect) {
 		var title = "none";
-		if(sectionTitles.length >= sect) {
-			title = sectionTitles[sect];
+		if(sect == 'w'){
+			title = sectionTitles[0];
+		} 
+
+		if(sect == 'e'){
+			title = sectionTitles[35];
 		} else {
-			title = "";
+			if(sectionTitles.length >= sect) {
+				sect++;
+				title = sectionTitles[sect];
+			} else {
+				title = "";
+			}
 		}
 		return title;
-	}
+	};
 		// **** 		****
 
 				// pick a random user from those still connected and return the user

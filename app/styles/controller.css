@@ -1,8 +1,11 @@
+body{
+	font-family: monospace;
+}
+
 .buttons{
-	width: 50%;
+	/*width: 50%;*/
 	background-color: rgb(200, 200, 200);
 	padding: 20px;
-	font-family: monospace;
 }
 
 a{
