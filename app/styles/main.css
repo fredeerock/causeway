@@ -1,14 +1,19 @@
 body {
-	display: flex;
+/*	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: center;*/
 	font-family: 'Vollkorn', serif;
 	font-size: 1.0em;
+	overflow: hidden;
+	/*position: fixed;*/
 }
 
 #causeway-text {
 	white-space: pre;
+}
 
+.sec{
+	display: none;
 }
 
 #causeway-text span {

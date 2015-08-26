@@ -51,7 +51,7 @@
 	</div>
 
 	<script type="text/javascript">
-		var socket = io.connect('http://mbp.local:8000');
+		var socket = io.connect('http://dostrenko-2.lsu.edu:8000');
 		socket.emit('addme', 'controller');
 		
 		socket.on('chat', function(data) {
