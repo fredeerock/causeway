@@ -82,10 +82,10 @@ io.sockets.on('connection', function (socket) {
 		socket.username = username;  // allows the username to be retrieved anytime the socket is used
 		// Can add any other pertinent details to the socket to be retrieved later
 		// socket.location, etc.
-		var userColor = "#0af";
+		var userColor = getRandomColor();
 		socket.userColor = userColor;
 		// .emit to send message back to caller.
-		socket.emit('chat', 'SERVER: ' + username + " " + socket.id + 'You have connected');
+		socket.emit('chat', 'SERVER: ' + username + " " + socket.id + 'You have connected' + socket.userColor);
 		// .broadcast to send message to all sockets.
 		socket.broadcast.emit('chat', 'SERVER: ' + username + " " + socket.id + ' is on deck');
 		socket.emit('bump', socket.username, "::dude::");
@@ -124,7 +124,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('item' , function(data) {
 		console.log("item: " + data);
 		socket.broadcast.emit('chat', socket.id + " : " + data, 1);
-		socket.broadcast.emit('itemback', data, 1);
+		socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
 	});
 
 	socket.on('slider', function(data) {
@@ -210,4 +210,13 @@ io.sockets.on('connection', function (socket) {
 	}
 
 });
+
+function getRandomColor() {
+	var letters = '0123456789ABCDEF'.split('');
+	var color = '#';
+	for (var i = 0; i < 6; i++ ) {
+	    color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+}
 
