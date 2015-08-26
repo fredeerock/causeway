@@ -27,14 +27,53 @@
 			socket.on('setSection', function(data) {
 				console.log("the section is now: " + data.title);
 				//TODO: add scrolling here...
-				scrollIntoView(data.sect);
+				// scrollIntoView(data.sect);
+				scrollto(data.sect);
+
 			});
 
-			function scrollIntoView(eleID) {
-			   var e = document.getElementsByClassName("s"+eleID)[0];
-			   if (!!e && e.scrollIntoView) {
-			       e.scrollIntoView();
-			   }
+			// function scrollIntoView(eleID) {
+			//    var e = document.getElementsByClassName("s"+eleID)[0];
+			//    if (!!e && e.scrollIntoView) {
+			//        e.scrollIntoView();
+			//    }
+			// }
+
+			// function scrollto(element){ 
+			// 	var ele = document.getElementsByClassName("s"+element)[0];
+			// 	if (!!ele) {
+  	// 				window.scrollTo(ele.offsetLeft,ele.offsetTop);
+  	// 			}
+			// }
+
+			function scrollto(element) {
+				var ele = document.getElementsByClassName("s"+element)[0];
+			    // var scrollStep = -window.scrollY / (1000 / 15);
+			    if (!!ele && ele.offsetTop > window.scrollY) {
+				    var scrollInterval1 = setInterval(function(){
+				    	console.log("offset: " + ele.offsetTop + " y: " + window.scrollY);
+				       
+				        if(ele.offsetTop > window.scrollY) {
+				            window.scrollBy( 0, 7 );
+				        } else {
+				        	clearInterval(scrollInterval1);
+				        }
+
+				    },15);
+				}
+
+				if (!!ele && ele.offsetTop < window.scrollY) {
+				    var scrollInterval2 = setInterval(function(){
+				    	console.log("offset: " + ele.offsetTop + " y: " + window.scrollY);
+				       
+				        if(ele.offsetTop < window.scrollY) {
+				            window.scrollBy( 0, -7 );
+				        } else {
+				        	clearInterval(scrollInterval2);
+				        }
+
+				    },15);
+				}
 			}
 
 			socket.on('itemback', function(data){
