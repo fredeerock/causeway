@@ -76,7 +76,7 @@ io.sockets.on('connection', function (socket) {
 	var ioClientCounter = 0;		// Can I move this outside into global vars?
 
 	socket.on('addme',function(username) {
-		if(username != "admin") {
+		if(username != "theater" || username != "controller") {
 			ioClients.push(socket.id);
 		}
 		socket.username = username;  // allows the username to be retrieved anytime the socket is used
@@ -168,7 +168,7 @@ io.sockets.on('connection', function (socket) {
 	sendSection = function (sect) {
 		var title = getSection(sect);
 
-		io.sockets.emit('setSection', sect, title);
+		io.sockets.emit('setSection', sect + " " + title);
 		oscClient.send('/setSection', sect, title);
 	}
 

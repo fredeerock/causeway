@@ -24,6 +24,10 @@
 				console.log("chat: " + data);
 			});
 
+			socket.on('setSection', function(data) {
+				console.log("the section is now: " + data);
+			});
+
 			socket.on('itemback', function(data){
 				var elements = document.getElementsByClassName(data.phrase);
 				for(var i = elements.length - 1; i >= 0; --i) {
