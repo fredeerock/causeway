@@ -27,6 +27,8 @@ small {
 
 .phrase {
 	opacity: 0;
+	border-bottom: 0.2em solid black;
+	padding: 0.1em;
 }
 
 @-webkit-keyframes zoomOutUp{
@@ -53,6 +55,7 @@ small {
 		-webkit-animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
 		animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
 	}
+
 }
 
 @keyframes zoomOutUp{
@@ -78,6 +81,7 @@ small {
 		-webkit-animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
 		animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
 	}
+
 }
 
 .clicked{
