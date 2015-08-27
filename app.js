@@ -85,10 +85,10 @@ io.sockets.on('connection', function (socket) {
 		var userColor = getRandomColor();
 		socket.userColor = userColor;
 		// .emit to send message back to caller.
-		socket.emit('chat', 'SERVER: ' + username + " " + socket.id + 'You have connected' + socket.userColor);
+		socket.emit('chat', 'SERVER: ' + username + " " + socket.id + 'You have connected. Color: ' + socket.userColor);
 		// .broadcast to send message to all sockets.
 		socket.broadcast.emit('chat', 'SERVER: ' + username + " " + socket.id + ' is on deck');
-		socket.emit('bump', socket.username, "::dude::");
+		// socket.emit('bump', socket.username, "::dude::");
 		var title = getSection(currentSection);
 		socket.emit('setSection', currentSection, title);
 	});
@@ -123,8 +123,8 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('item' , function(data) {
 		console.log("item: " + data);
-		socket.broadcast.emit('chat', socket.id + " : " + data, 1);
-		socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
+		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
+		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
 		oscClient.send('/causeway/phrase/number', data, socket.userColor);
 	});
 

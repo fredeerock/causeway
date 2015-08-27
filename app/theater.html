@@ -22,7 +22,7 @@
 
 	<script>
 
- 		var socket = io.connect('http://dostrenko-2.lsu.edu:8000');
+ 		var socket = io.connect('http://localhost:8000');
  		socket.emit('addme', 'theater');
 		
 		socket.on('chat', function(data) {

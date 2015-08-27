@@ -5,53 +5,24 @@
 	<title>Causeway | Controller</title>
 	<script src="/socket.io/socket.io.js"></script>
 	<link rel="stylesheet" href="styles/controller.css">
+	<link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 
-<h1>Causeway Controller</h1>
-	
-	<div class="buttons">
-		<a href="#" onclick="goto('w')">Welcome...</a>
-		<a href="#" onclick="goto(0)">Preface...</a>
-		<a href="#" onclick="goto(1)">Section 01</a>
-		<a href="#" onclick="goto(2)">Section 02</a>
-		<a href="#" onclick="goto(3)">Section 03</a>
-		<a href="#" onclick="goto(4)">Section 04</a>
-		<a href="#" onclick="goto(5)">Section 05</a>
-		<a href="#" onclick="goto(6)">Section 06</a>
-		<a href="#" onclick="goto(7)">Section 07</a>
-		<a href="#" onclick="goto(8)">Section 08</a>
-		<a href="#" onclick="goto(9)">Section 09</a>
-		<a href="#" onclick="goto(10)">Section 10</a>
-		<a href="#" onclick="goto(11)">Section 11</a>
-		<a href="#" onclick="goto(12)">Section 12</a>
-		<a href="#" onclick="goto(13)">Section 13</a>
-		<a href="#" onclick="goto(14)">Section 14</a>
-		<a href="#" onclick="goto(15)">Section 15</a>
-		<a href="#" onclick="goto(16)">Section 16</a>
-		<a href="#" onclick="goto(17)">Section 05</a>
-		<a href="#" onclick="goto(18)">Section 17</a>
-		<a href="#" onclick="goto(19)">Section 18</a>
-		<a href="#" onclick="goto(20)">Section 19</a>
-		<a href="#" onclick="goto(21)">Section 20</a>
-		<a href="#" onclick="goto(22)">Section 21</a>
-		<a href="#" onclick="goto(23)">Section 22</a>
-		<a href="#" onclick="goto(24)">Section 23</a>
-		<a href="#" onclick="goto(25)">Section 24</a>
-		<a href="#" onclick="goto(26)">Section 25</a>
-		<a href="#" onclick="goto(27)">Section 26</a>
-		<a href="#" onclick="goto(28)">Section 27</a>
-		<a href="#" onclick="goto(29)">Section 28</a>
-		<a href="#" onclick="goto(30)">Section 29</a>
-		<a href="#" onclick="goto(31)">Section 30</a>
-		<a href="#" onclick="goto(32)">Section 31</a>
-		<a href="#" onclick="goto(33)">Section 32</a>
-		<a href="#" onclick="goto(34)">Section 33</a>
-		<a href="#" onclick="goto('e')">.......End</a>
+	<div class="sec welcome">
+			<h1>Causeway</h1>
+			<p>Words | <strong>Vincent A. Cellucci</strong></p>
+			<p>Audio | <strong>Jesse Allison</strong></p>
+			<p>Visuals | <strong>Derick Ostrenko</strong></p>
+			<p><em>Instructions: Tapping is the new snapping.</em></p>
+			<p class ="url">Visit http://dostrenko-2.lsu.edu:8000 on your mobile device to participate.</p>
 	</div>
 
+<div id="causeway-text"></div>
+
 	<script type="text/javascript">
-		var socket = io.connect('http://dostrenko-2.lsu.edu:8000');
+		var socket = io.connect('http://localhost:8000');
 		socket.emit('addme', 'controller');
 		
 		socket.on('chat', function(data) {
@@ -62,10 +33,48 @@
 			console.log("The section is now: " + data.title);
 		});
 
+		function scrollto(element){ 
+			var ele = document.getElementsByClassName(element)[0];
+			if (!!ele) {
+				window.scrollTo(ele.offsetLeft,ele.offsetTop);
+			}
+		}
+
 		function goto(num) {
 			console.log(num);
 			socket.emit("section", num);
 		}
+
+		function clickgo() {
+			var elements = document.getElementsByClassName(this.className);
+			for(var i = elements.length - 1; i >= 0; --i) {
+				var section = elements[i].className.split(" ")[1];
+				scrollto(section);
+				console.log(section);
+			}
+		}
+
+		window.onload = function() {
+
+			var xhr= new XMLHttpRequest();
+			xhr.open('GET', 'data/causeway.html', true);
+			xhr.onreadystatechange= function() {
+			    if (this.readyState!==4) return;
+			    if (this.status!==200) return; // or whatever error handling you want
+			    document.getElementById("causeway-text").innerHTML= this.responseText;
+			    addEvents();
+			};
+			xhr.send();
+
+			function addEvents() {
+				var phrases = document.getElementsByClassName('sec');
+				for (var i = 0; i < phrases.length; i++) {
+					phrases[i].addEventListener("click", clickgo, false);
+				}
+			}
+
+		};
+
 	</script>
 	
 </body>
