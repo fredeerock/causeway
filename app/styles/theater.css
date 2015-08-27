@@ -38,7 +38,7 @@ small {
 }
 
 .phrase {
-	opacity: 0;
+	opacity: 0.5;
 	border-bottom: 0.2em solid black;
 	padding: 0.1em;
 }

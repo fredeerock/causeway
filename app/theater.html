@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<div id="welcome">
+	<div class="sec sw">
 			<h1>Causeway</h1>
 			<p>Words | <strong>Vincent A. Cellucci</strong></p>
 			<p>Audio | <strong>Jesse Allison</strong></p>
@@ -30,7 +30,7 @@
 		});
 
 		socket.on('itemback', function(data){
-			console.log("itemback: " + data);
+			console.log("itemback: " + data.phrase);
 			var elements = document.getElementsByClassName(data.phrase);
 			for(var i = elements.length - 1; i >= 0; --i) {
 				elements[i].className += " clicked";
@@ -42,13 +42,24 @@
 
 		socket.on('setSection', function(data) {
 			console.log("the section is now: " + data.title);
+			if(data.title == "Welcome") {
+				scrollto("sw");
+			}
+			
 			if(data.title !== undefined){
-				// hidedivs(data.sect);
-				document.getElementById("welcome").style.display = "none";
+				
+				var otherClasses = document.querySelectorAll('.sec'),
+				    i = 0,
+				    l = otherClasses.length;
+
+				for (i; i < l; i++) {
+				    otherClasses[i].style.display = 'none';
+				}
+
+				document.getElementsByClassName("s"+data.sect)[0].style.display = 'block';
+
 				scrollto(data.sect);
-			} else {
-				console.log("yep");
-				document.getElementById("welcome").style.display = "block";
+
 			}
 		});
 

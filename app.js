@@ -126,8 +126,8 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('item' , function(data) {
 		console.log("item: " + data);
-		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
-		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
+		socket.broadcast.emit('chat', socket.id + " : " + data, 1);
+		socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
 		oscClient.send('/causeway/phrase/number', data, socket.userColor);
 	});
 
