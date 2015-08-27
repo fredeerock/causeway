@@ -90,7 +90,10 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('chat', 'SERVER: ' + username + " " + socket.id + ' is on deck');
 		// socket.emit('bump', socket.username, "::dude::");
 		var title = getSection(currentSection);
-		socket.emit('setSection', currentSection, title);
+		console.log(currentSection);
+
+		socket.emit('setSection', {sect: currentSection, title: title});
+		// io.sockets.emit('setSection', {sect: sect, title: title});
 	});
 
 	 socket.on('disconnect', function() {
@@ -188,7 +191,6 @@ io.sockets.on('connection', function (socket) {
 		var title = "none";
 		
 		if(sect == 'w'){
-			console.log("wahhhh");
 			title = sectionTitles[0];
 		} 
 

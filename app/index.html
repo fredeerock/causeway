@@ -13,12 +13,18 @@
 	</head>
 	<body>
 
-		<div id="welcome">
+		<div class="sec sw">
 			<h1>Causeway</h1>
 			<p>Words | <strong>Vincent A. Cellucci</strong></p>
 			<p>Audio | <strong>Jesse Allison</strong></p>
 			<p>Visuals | <strong>Derick Ostrenko</strong></p>
 			<p><em>Instructions: Tapping is the new snapping.</em></p>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
 		</div>
 
 		<div id="causeway-text"></div>
@@ -35,24 +41,32 @@
 			socket.on('setSection', function(data) {
 				console.log(data);
 				console.log("the section is now: " + data.title);
+
+				if(data.title == "Welcome") {
+					scrollto2("sw");
+					// document.getElementById("welcome").style.display = "block";
+				}
 				
 				if(data.title !== undefined){
-					hidedivs(data.sect);
+					// hidedivs(data.sect);
+					
+					var otherClasses = document.querySelectorAll('.sec'),
+					    i = 0,
+					    l = otherClasses.length;
+
+					for (i; i < l; i++) {
+					    otherClasses[i].style.display = 'none';
+					}
+
+					document.getElementsByClassName("s"+data.sect)[0].style.display = 'block';
+
 					scrollto2(data.sect);
 
 				}
-
-				if(data.title == 'Welcome') {
-					console.log('yep');
-					document.getElementById("welcome").style.display = "block";
-				}
-
 				
 			});
 
 			function hidedivs(section){
-				document.getElementsByClassName("s"+section)[0].style.display = 'block';
-
 				// var elements = document.getElementsByClassName(section);
 				// for(var i = elements.length - 1; i >= 0; --i) {
 				// 	elements[i].style.display = "none";
@@ -61,8 +75,8 @@
 
 			function scrollto2(element){ 
 			     var ele = document.getElementsByClassName("s"+element)[0];
-			     if (!!ele) {
-			     	window.scrollTo(ele.offsetLeft,ele.offsetTop);
+			     if (ele) {
+			     	window.scrollTo(0, ele.offsetTop);
 			     }
 			}
 
