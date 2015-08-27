@@ -94,6 +94,7 @@ io.sockets.on('connection', function (socket) {
 		if(username != "theater" || username != "controller") {
 			ioClients.push(socket.id);
 		}
+
 		socket.username = username;  // allows the username to be retrieved anytime the socket is used
 		// Can add any other pertinent details to the socket to be retrieved later
 		// socket.location, etc.

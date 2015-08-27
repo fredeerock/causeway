@@ -3,7 +3,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	font-family: 'Vollkorn', serif;
-	font-size: 1.2em;
+	font-size: 1.1em;
 	background-color: black;
 	color: white;
 }
@@ -35,7 +35,10 @@ body {
 }
 
 .symbol {
-	font-size: 3.0em;
+	-webkit-filter: blur(5px);
+	filter: blur(05px);
+	opacity: 0.5;
+	font-size: 1.5em;
 }
 
 small {
@@ -101,4 +104,19 @@ small {
 	animation-duration: 1.5s;
 	-webkit-animation-fill-mode: forwards;
 	animation-fill-mode: forwards;
+}
+
+video#bgvid { 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover; 
+    -webkit-filter: blur(50px);
 }

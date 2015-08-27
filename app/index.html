@@ -85,13 +85,13 @@
 
 			function clickgo() {
 				var elements = document.getElementsByClassName(this.className);
-				for(var i = elements.length - 1; i >= 0; --i) {
-					socket.emit('item', elements[i].className.split(" ")[1]);
+				// for(var i = elements.length - 1; i >= 0; --i) {
+					socket.emit('item', elements[0].className.split(" ")[1]);
 					// console.log(elements[i].className.split(" ")[1]);
-					elements[i].className += " clicked";
-					elements[i].style.color = myColor;
-					elements[i].style.backgroundColor = myColor;
-				}
+					elements[0].className += " clicked";
+					// elements[i].style.color = myColor;
+					elements[0].style.backgroundColor = myColor;
+				// }
 			}
 
 			window.onload = function() {
