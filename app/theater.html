@@ -19,13 +19,17 @@
 			<br>
 			<p><em>Tapping is the new snapping. Navigate your mobile device to the URL below to participate:</em></p>
 			<h2>http://emdm.io</h2>
+			<p>If you need WiFi use...<br>
+			Network: eduroam<br>
+			Username: digitalart@lsu.edu<br>
+			Password: katrina@10</p>
 	</div>
 
 <div id="causeway-text"></div>
 
 	<script>
 
- 		var socket = io.connect('http://mbp.local:8000');
+ 		var socket = io.connect('http://c.hmiss.in');
  		socket.emit('addme', {name: "theater"});
 		
 		socket.on('chat', function(data) {
