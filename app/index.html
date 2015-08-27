@@ -30,9 +30,9 @@
 		<div id="causeway-text"></div>
 
 		<script>
-			var socket = io.connect('http://localhost:8000');
+			var socket = io.connect('http://mbp.local:8000');
 			var myColor = getRandomColor();
-			document.getElementsByTagName("body")[0].style.borderTop = "15px solid " + myColor;
+			document.getElementsByTagName("body")[0].style.borderLeft = "15px solid " + myColor;
 
 			socket.emit('addme', {name: "a_user", color: myColor});
 
@@ -76,11 +76,11 @@
 			socket.on('itemback', function(data){
 				console.log("itemback: " + data.phrase);
 				var elements = document.getElementsByClassName(data.phrase);
-				for(var i = elements.length - 1; i >= 0; --i) {
-					elements[i].className += " clicked";
+				// for(var i = elements.length - 1; i >= 0; --i) {
+					elements[0].className += " clicked";
 					// elements[i].style.color = data.color;
 					// elements[i].style.backgroundColor = data.color;
-				}
+				// }
 			});
 
 			function clickgo() {

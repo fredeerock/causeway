@@ -43,7 +43,9 @@ small {
 }
 
 .phrase {
-	opacity: 0.25;
+	-webkit-filter: blur(5px);
+	filter: blur(05px);
+	opacity: 0.5;
 	border-bottom: 0.2em solid black;
 	padding: 0.1em;
 }
@@ -86,7 +88,7 @@ small {
     -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
   }
-  
+
   100% {
   	opacity: 1;
   }
@@ -95,8 +97,8 @@ small {
 .clicked{
 	-webkit-animation-name: zoomInUp;
 	animation-name: zoomInUp;
-	-webkit-animation-duration: 1s;
-	animation-duration: 1s;
+	-webkit-animation-duration: 1.5s;
+	animation-duration: 1.5s;
 	-webkit-animation-fill-mode: forwards;
 	animation-fill-mode: forwards;
 }

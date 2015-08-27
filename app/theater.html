@@ -23,7 +23,7 @@
 
 	<script>
 
- 		var socket = io.connect('http://localhost:8000');
+ 		var socket = io.connect('http://mbp.local:8000');
  		socket.emit('addme', {name: "theater"});
 		
 		socket.on('chat', function(data) {
@@ -33,12 +33,18 @@
 		socket.on('itemback', function(data){
 			console.log("itemback: " + data.phrase);
 			var elements = document.getElementsByClassName(data.phrase);
-			for(var i = elements.length - 1; i >= 0; --i) {
-				elements[i].className += " clicked";
+			// for(var i = elements.length - 1; i >= 0; --i) {
+				elements[0].className += " clicked";
 				// elements[i].style.color = data.color;
 				// elements[i].style.backgroundColor = data.color;
-				elements[i].style.borderColor = data.color;
-			}
+				// var elem1 = document.getElementById("elemId");
+				var style = window.getComputedStyle(elements[0], null);
+				var filter = style.webkitFilter.substr(5, 1);
+				console.log(filter);
+				var mf = filter - 1;
+				elements[0].style.webkitFilter = "blur("+mf+"px)";
+				elements[0].style.borderColor = data.color;
+			// }
 		});
 
 		socket.on('setSection', function(data) {

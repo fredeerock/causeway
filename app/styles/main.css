@@ -1,5 +1,6 @@
 body {
 	margin: 0;
+	padding-left: 1.0em;
 /*	display: flex;
 	align-items: center;
 	justify-content: center;*/
@@ -95,8 +96,8 @@ small {
 .clicked{
 	-webkit-animation-name: zoomOutUp;
 	animation-name: zoomOutUp;
-	-webkit-animation-duration: 1s;
-	animation-duration: 1s;
+	-webkit-animation-duration: 1.5s;
+	animation-duration: 1.5s;
 	-webkit-animation-fill-mode: both;
 	animation-fill-mode: both;
 }

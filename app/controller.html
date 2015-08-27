@@ -22,7 +22,7 @@
 <div id="causeway-text"></div>
 
 	<script type="text/javascript">
-		var socket = io.connect('http://localhost:8000');
+		var socket = io.connect('http://mbp.local:8000');
  		socket.emit('addme', {name: "controller"});
 		
 		socket.on('chat', function(data) {
