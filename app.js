@@ -80,6 +80,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('addme', function(data) {
 		username = data.name;
 		var userColor = data.color;
+		var userLocation = Math.random(0, 1);
 
 		if(username == "theater"){
 			theaterID = socket.id;
@@ -99,6 +100,7 @@ io.sockets.on('connection', function (socket) {
 		// Can add any other pertinent details to the socket to be retrieved later
 		// socket.location, etc.
 		// var userColor = getRandomColor();
+		socket.userLocation = userLocation;
 		socket.userColor = userColor;
 		// .emit to send message back to caller.
 		socket.emit('chat', 'SERVER: You have connected. Hello: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
@@ -149,7 +151,7 @@ io.sockets.on('connection', function (socket) {
 	        io.sockets.connected[theaterID].emit('itemback', {phrase: data, color: socket.userColor}, 1);
 	    }
 		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
-		oscClient.send('/causeway/phrase/number', data, socket.userColor);
+		oscClient.send('/causeway/phrase/number', data, socket.userLocation, socket.userColor);
 	});
 
 	socket.on('slider', function(data) {
