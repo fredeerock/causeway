@@ -18,11 +18,16 @@ body {
 	font-size: 2.0em;
 }
 
-#welcome {
+.sw {
 	text-align: center;
-	position: fixed;
-	top:0px;
-	left: 0px;
+}
+
+.sw p{
+	font-size: 1.0em
+}
+
+.sw .url{
+	font-size: 1.5em
 }
 
 #causeway-text span {
@@ -38,7 +43,7 @@ small {
 }
 
 .phrase {
-	opacity: 0.5;
+	opacity: 0.25;
 	border-bottom: 0.2em solid black;
 	padding: 0.1em;
 }

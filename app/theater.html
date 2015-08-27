@@ -14,8 +14,9 @@
 			<p>Words | <strong>Vincent A. Cellucci</strong></p>
 			<p>Audio | <strong>Jesse Allison</strong></p>
 			<p>Visuals | <strong>Derick Ostrenko</strong></p>
-			<p><em>Instructions: Tapping is the new snapping.</em></p>
-			<p class ="url">Visit http://dostrenko-2.lsu.edu:8000 on your mobile device to participate.</p>
+			<br>
+			<p><em>Tapping is the new snapping. Point your mobile device to the URL below to participate:</em></p>
+			<h2>http://dostrenko-2.lsu.edu:8000</h2>
 	</div>
 
 <div id="causeway-text"></div>
@@ -23,7 +24,7 @@
 	<script>
 
  		var socket = io.connect('http://localhost:8000');
- 		socket.emit('addme', 'theater');
+ 		socket.emit('addme', {name: "theater"});
 		
 		socket.on('chat', function(data) {
 			console.log(data);
@@ -41,9 +42,9 @@
 		});
 
 		socket.on('setSection', function(data) {
-			console.log("the section is now: " + data.title);
+			console.log("the section is now: " + data.sect + ":" + data.title);
 			if(data.title == "Welcome") {
-				scrollto("sw");
+				scrollto(data.sect);
 			}
 			
 			if(data.title !== undefined){

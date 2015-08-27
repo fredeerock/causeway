@@ -30,9 +30,10 @@
 		<div id="causeway-text"></div>
 
 		<script>
-
 			var socket = io.connect('http://localhost:8000');
-			socket.emit('addme', "a_user");
+			var myColor = getRandomColor();
+
+			socket.emit('addme', {name: "a_user", color: myColor});
 
 			socket.on('chat', function(data){
 				console.log("chat: " + data);
@@ -43,7 +44,7 @@
 				console.log("the section is now: " + data.title);
 
 				if(data.title == "Welcome") {
-					scrollto2("sw");
+					scrollto(data.sect);
 				}
 				
 				if(data.title !== undefined){
@@ -58,13 +59,13 @@
 
 					document.getElementsByClassName("s"+data.sect)[0].style.display = 'block';
 
-					scrollto2(data.sect);
+					scrollto(data.sect);
 
 				}
 				
 			});
 
-			function scrollto2(element){ 
+			function scrollto(element){ 
 			     var ele = document.getElementsByClassName("s"+element)[0];
 			     if (ele) {
 			     	window.scrollTo(0, ele.offsetTop);
@@ -76,8 +77,8 @@
 				var elements = document.getElementsByClassName(data.phrase);
 				for(var i = elements.length - 1; i >= 0; --i) {
 					elements[i].className += " clicked";
-					elements[i].style.color = data.color;
-					elements[i].style.backgroundColor = data.color;
+					// elements[i].style.color = data.color;
+					// elements[i].style.backgroundColor = data.color;
 				}
 			});
 
@@ -87,6 +88,8 @@
 					socket.emit('item', elements[i].className.split(" ")[1]);
 					// console.log(elements[i].className.split(" ")[1]);
 					elements[i].className += " clicked";
+					elements[i].style.color = myColor;
+					elements[i].style.backgroundColor = myColor;
 				}
 			}
 
@@ -111,6 +114,15 @@
 				}
 
 			};
+
+			function getRandomColor() {
+				var letters = '0123456789ABCDEF'.split('');
+				var color = '#';
+				for (var i = 0; i < 6; i++ ) {
+				    color += letters[Math.floor(Math.random() * 16)];
+				}
+				return color;
+			}
 
 		</script>
 

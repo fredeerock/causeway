@@ -68,6 +68,8 @@ var io = sio.listen(server);
 
 var ioClients = [];		// list of clients who have logged in.
 var currentSection = 0;		// current section.
+var theaterID;
+var conrollerID;
 
 // *********************
 
@@ -75,19 +77,32 @@ var currentSection = 0;		// current section.
 io.sockets.on('connection', function (socket) {
 	var ioClientCounter = 0;		// Can I move this outside into global vars?
 
-	socket.on('addme',function(username) {
+	socket.on('addme', function(data) {
+		username = data.name;
+		var userColor = data.color;
+
+		if(username == "theater"){
+			theaterID = socket.id;
+			console.log("Hello Theater: " + theaterID);
+		}
+
+		if(username == "controller"){
+			controllerID = socket.id;
+			console.log("Hello Controller: " + controllerID);
+		}
+
 		if(username != "theater" || username != "controller") {
 			ioClients.push(socket.id);
 		}
 		socket.username = username;  // allows the username to be retrieved anytime the socket is used
 		// Can add any other pertinent details to the socket to be retrieved later
 		// socket.location, etc.
-		var userColor = getRandomColor();
+		// var userColor = getRandomColor();
 		socket.userColor = userColor;
 		// .emit to send message back to caller.
-		socket.emit('chat', 'SERVER: ' + username + " " + socket.id + 'You have connected. Color: ' + socket.userColor);
+		socket.emit('chat', 'SERVER: You have connected. Hello: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
 		// .broadcast to send message to all sockets.
-		socket.broadcast.emit('chat', 'SERVER: ' + username + " " + socket.id + ' is on deck');
+		//socket.broadcast.emit('chat', 'SERVER: A new user has connected: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
 		// socket.emit('bump', socket.username, "::dude::");
 		var title = getSection(currentSection);
 		console.log(currentSection);
@@ -126,8 +141,13 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('item' , function(data) {
 		console.log("item: " + data);
-		socket.broadcast.emit('chat', socket.id + " : " + data, 1);
-		socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
+		// TODO: Take out all the socket.broadcast.emits.
+		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
+
+	    if(io.sockets.connected[theaterID]!== null) {
+	        io.sockets.connected[theaterID].emit('itemback', {phrase: data, color: socket.userColor}, 1);
+	    }
+		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
 		oscClient.send('/causeway/phrase/number', data, socket.userColor);
 	});
 

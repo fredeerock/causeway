@@ -7,15 +7,15 @@ body {
 	/*position: fixed;*/
 }
 
-.welcome {
+.sw {
 	text-align: center;
 }
 
-.welcome p{
+.sw p{
 	font-size: 1.0em
 }
 
-.welcome .url{
+.sw .url{
 	font-size: 1.5em
 }
 
