@@ -30,7 +30,7 @@
 
 	<script>
 
- 		var socket = io.connect('http://c.hmiss.in');
+ 		var socket = io.connect(':8000/');
  		socket.emit('addme', {name: "theater"});
 		
 		socket.on('chat', function(data) {
