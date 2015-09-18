@@ -80,7 +80,8 @@ io.sockets.on('connection', function (socket) {
 	socket.on('addme', function(data) {
 		username = data.name;
 		var userColor = data.color;
-		var userLocation = Math.random(0, 1);
+		var userNote = data.note;
+        var userLocation = data.location;
 
 		if(username == "theater"){
 			theaterID = socket.id;
@@ -102,6 +103,7 @@ io.sockets.on('connection', function (socket) {
 		// var userColor = getRandomColor();
 		socket.userLocation = userLocation;
 		socket.userColor = userColor;
+		socket.userNote = userNote;
 		// .emit to send message back to caller.
 		socket.emit('chat', 'SERVER: You have connected. Hello: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
 		// .broadcast to send message to all sockets.
@@ -112,6 +114,9 @@ io.sockets.on('connection', function (socket) {
 
 		socket.emit('setSection', {sect: currentSection, title: title});
 		// io.sockets.emit('setSection', {sect: sect, title: title});
+		
+		oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation, socket.userNote);
+        });
 	});
 
 	 socket.on('disconnect', function() {
@@ -153,6 +158,10 @@ io.sockets.on('connection', function (socket) {
 		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
 		oscClient.send('/causeway/phrase/number', data, socket.userLocation, socket.userColor);
 	});
+
+	socket.on('triggerCauseway', function(data) {
+                oscClient.send('/causeway/triggerCauseway', socket.id);
+        });
 
 	socket.on('slider', function(data) {
 		console.log("slider! " + data);
