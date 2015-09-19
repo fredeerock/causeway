@@ -20,11 +20,11 @@
 			<p>Words | <strong>Vincent A. Cellucci</strong></p>
 			<p>Audio | <strong>Jesse Allison</strong></p>
 			<p>Visuals | <strong>Derick Ostrenko</strong></p>
-			<p><em>Instructions: Tapping is the new snapping.</em></p>
+			<p><em>Start by tapping your approximate location in the theater. Tapping is the new snapping.</em></p>
 			
 			<div id="seatMapDiv" style="padding-right: 25px;">
 				<svg version="1.1" id="seatMap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-					 viewBox="0 0 640 445" style="max-width: 50vh; enable-background:new 0 0 640 445;" xml:space="preserve">
+					 viewBox="0 0 640 445" style="max-width: 70vh; enable-background:new 0 0 640 445;" xml:space="preserve">
 				<rect x="4" y="4" style="fill:none;stroke:#B3B3B3;stroke-width:8;stroke-miterlimit:10;" width="632" height="437"/>
 				<g>
 					<path style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" d="M623,316.7c-87.7,66.7-192,107.6-303,107.6
@@ -43,20 +43,17 @@
 
 			function getClickPosition(e) {
 				var m = seatMap.getScreenCTM();
-				var dh = document.getElementById('seatMap').clientHeight;
-				var dw = document.getElementById('seatMap').clientWidth;
 				var p = document.getElementById('seatMap').createSVGPoint(); 
 				p.x = e.clientX;
 				p.y = e.clientY;
 				p = p.matrixTransform(m.inverse());
-				console.log(p);
-    			// var xPosition = e.clientX;
-    			// var yPosition = e.clientY;
-    			// var mx = xPosition/dw;
-    			// var my = yPosition/dh;
-    			// console.log(dw, dh);
-    			// console.log(xPosition, yPosition);
-    			// console.log(mx, my);
+				var tx = document.getElementById('seatMap').getAttribute("viewBox").split(" ")[2]; 
+				var ty = document.getElementById('seatMap').getAttribute("viewBox").split(" ")[3];
+				var mx = p.x/tx;
+				var my = p.y/ty;
+				console.log(mx, my);
+
+
 			}
 
 			var socket = io.connect(':8000/');
