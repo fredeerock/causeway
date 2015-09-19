@@ -20,7 +20,7 @@
 			<p>Words | <strong>Vincent A. Cellucci</strong></p>
 			<p>Audio | <strong>Jesse Allison</strong></p>
 			<p>Visuals | <strong>Derick Ostrenko</strong></p>
-			<p><em>Start by tapping your approximate location in the theater. Tapping is the new snapping.</em></p>
+			<p>Start by tapping your approximate location in the theater.</p>
 			
 			<div id="seatMapDiv" style="padding-right: 25px;">
 				<svg version="1.1" id="seatMap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -34,6 +34,7 @@
 				<line style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" x1="77" y1="25" x2="563" y2="25"/>
 				</svg>
 			</div>
+			<p><em>Tapping is the new snapping!</em></p>
 		</div>
 
 		<div id="causeway-text"></div>
@@ -52,8 +53,6 @@
 				var mx = p.x/tx;
 				var my = p.y/ty;
 				console.log(mx, my);
-
-
 			}
 
 			var socket = io.connect(':8000/');
@@ -75,33 +74,31 @@
 				console.log("the section is now: " + data.title);
 				
 				if(data.title == "Welcome") {
-					scrollto(data.sect);
+					// scrollto(data.sect);
 				}
 				
 				if(data.title !== undefined){
 					
-					var otherClasses = document.querySelectorAll('.sec'),
-					    i = 0,
-					    l = otherClasses.length;
+					var otherClasses = document.querySelectorAll('.sec');
 
-					for (i; i < l; i++) {
+					for (var i = 0; i < otherClasses.length; i++) {
 					    otherClasses[i].style.display = 'none';
 					}
 
 					document.getElementsByClassName("s"+data.sect)[0].style.display = 'block';
 
-					scrollto(data.sect);
+					// scrollto(data.sect);
 
 				}
 				
 			});
 
-			function scrollto(element){ 
-			     var ele = document.getElementsByClassName("s"+element)[0];
-			     if (ele) {
-			     	window.scrollTo(0, ele.offsetTop);
-			     }
-			}
+			// function scrollto(element){ 
+			//      var ele = document.getElementsByClassName("s"+element)[0];
+			//      if (ele) {
+			//      	window.scrollTo(0, ele.offsetTop);
+			//      }
+			// }
 
 			socket.on('itemback', function(data){
 				console.log("itemback: " + data.phrase);
