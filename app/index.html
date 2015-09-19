@@ -16,13 +16,13 @@
 	<body>
 		
 		<div class="sec sw">
-			<h1>Causeway</h1>
-			<p>Words | <strong>Vincent A. Cellucci</strong></p>
-			<p>Audio | <strong>Jesse Allison</strong></p>
-			<p>Visuals | <strong>Derick Ostrenko</strong></p>
-			<p>Start by tapping your approximate location in the theater.</p>
+			<h1 onclick="causeSound.triggerCauseway();">Causeway</h1>
 			
-			<div id="seatMapDiv" style="padding-right: 25px;">
+			<div class="sd" style="padding-right: 25px;">
+				<p>Words | <strong>Vincent A. Cellucci</strong></p>
+				<p>Audio | <strong>Jesse Allison</strong></p>
+				<p>Visuals | <strong>Derick Ostrenko</strong></p>
+				<p>Start by tapping your approximate location in the theater.</p>
 				<svg version="1.1" id="seatMap" x="0px" y="0px" viewBox="0 0 640 445" style="max-width: 70vh; enable-background:new 0 0 640 445;" >
 				<rect x="4" y="4" style="fill:none;stroke:#B3B3B3;stroke-width:8;stroke-miterlimit:10;" width="632" height="437"/>
 				<g>
@@ -32,18 +32,20 @@
 				<rect x="77.5" y="53.6" style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" width="485.1" height="52.5"/>
 				<line style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" x1="77" y1="25" x2="563" y2="25"/>
 				</svg>
+				<p><em>Tapping is the new snapping!</em></p>
 			</div>
-			<p><em>Tapping is the new snapping!</em></p>
-		</div>
 
-		<div class="sec st">
-			<h1 onclick="causeSound.triggerCauseway();">Causeway</h1>
-			
+			<div class="st" style="display: none;">
+				
 				<p><br><br><em>Thanks for tapping!<br>
 				Please wait while more users connect.<br>
-				Tap the word causeway to test your connection.</em></p>
+				Tap the word 'Causeway' above to test your connection.</em></p>
+			</div>
+
 			
 		</div>
+
+
 
 		<div id="causeway-text"></div>
 
@@ -60,9 +62,12 @@
 				var ty = document.getElementById('seatMap').getAttribute("viewBox").split(" ")[3];
 				var mx = p.x/tx;
 				var my = p.y/ty;
-				console.log(mx, my);
-				document.getElementsByClassName("sw")[0].style.display = 'none';
-				document.getElementsByClassName("st")[0].style.display = 'block';
+				
+				myLocation[0] = mx;
+				myLocation[1] = my;
+				console.log(myLocation);
+
+				registerWithServer();
 			}
 
 			var socket = io.connect(':8000/');
@@ -72,7 +77,8 @@
 			
 			function registerWithServer() {
 				socket.emit('addme', {name: "a_user", color: myColor, note: causeSound.pitch, location: myLocation});
-				// document.getElementByID("overlay").style.display = 'none';
+				document.getElementsByClassName("sd")[0].style.display = 'none';
+				document.getElementsByClassName("st")[0].style.display = 'block';
 			}
 			
 			socket.on('chat', function(data){
@@ -205,7 +211,7 @@
 			
 			//socket.emit('addme', {name: "a_user", color: myColor, note: causeSound.pitch, location: myLocation});
 			
-			registerWithServer();
+			
 			
 		</script>
 
