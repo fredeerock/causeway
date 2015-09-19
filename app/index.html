@@ -16,15 +16,14 @@
 	<body>
 		
 		<div class="sec sw">
-			<h1 onclick="causeSound.triggerCauseway();">Causeway</h1>
+			<h1>Causeway</h1>
 			<p>Words | <strong>Vincent A. Cellucci</strong></p>
 			<p>Audio | <strong>Jesse Allison</strong></p>
 			<p>Visuals | <strong>Derick Ostrenko</strong></p>
 			<p>Start by tapping your approximate location in the theater.</p>
 			
 			<div id="seatMapDiv" style="padding-right: 25px;">
-				<svg version="1.1" id="seatMap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-					 viewBox="0 0 640 445" style="max-width: 70vh; enable-background:new 0 0 640 445;" xml:space="preserve">
+				<svg version="1.1" id="seatMap" x="0px" y="0px" viewBox="0 0 640 445" style="max-width: 70vh; enable-background:new 0 0 640 445;" >
 				<rect x="4" y="4" style="fill:none;stroke:#B3B3B3;stroke-width:8;stroke-miterlimit:10;" width="632" height="437"/>
 				<g>
 					<path style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" d="M623,316.7c-87.7,66.7-192,107.6-303,107.6
@@ -35,6 +34,15 @@
 				</svg>
 			</div>
 			<p><em>Tapping is the new snapping!</em></p>
+		</div>
+
+		<div class="sec st">
+			<h1 onclick="causeSound.triggerCauseway();">Causeway</h1>
+			
+				<p><br><br><em>Thanks for tapping!<br>
+				Please wait while more users connect.<br>
+				Tap the word causeway to test your connection.</em></p>
+			
 		</div>
 
 		<div id="causeway-text"></div>
@@ -53,6 +61,8 @@
 				var mx = p.x/tx;
 				var my = p.y/ty;
 				console.log(mx, my);
+				document.getElementsByClassName("sw")[0].style.display = 'none';
+				document.getElementsByClassName("st")[0].style.display = 'block';
 			}
 
 			var socket = io.connect(':8000/');
@@ -73,9 +83,9 @@
 				console.log(data);
 				console.log("the section is now: " + data.title);
 				
-				if(data.title == "Welcome") {
-					// scrollto(data.sect);
-				}
+				// if(data.title == "Welcome") {
+				// 	// scrollto(data.sect);
+				// }
 				
 				if(data.title !== undefined){
 					

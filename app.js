@@ -237,14 +237,13 @@ io.sockets.on('connection', function (socket) {
 		
 		return title;
 	};
-		// **** 		****
 
-				// pick a random user from those still connected and return the user
+	// pick a random user from those still connected and return the user
 	getRandomUser = function() {
 		var randomUser = Math.floor(Math.random() * ioClients.length);
 		var user = io.sockets.socket(ioClients[randomUser]);
 		return user;
-	}
+	};
 
 	getNextUser = function() {
 		// console.log("ioClients Length: ", ioClients.length);
@@ -257,7 +256,7 @@ io.sockets.on('connection', function (socket) {
 		// console.log("Username ", user.username);
 
 		return user;
-	}
+	};
 
 });
 
