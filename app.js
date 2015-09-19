@@ -42,7 +42,7 @@ oscServer.on("message", function (msg, rinfo) {
 });
 
 		// oscClient is used to send osc messages (to Max)
-var oscClient = new osc.Client('167.96.108.219', 7745);
+var oscClient = new osc.Client('167.96.105.8', 7745);
 
 
 	// server is the node server (web app via express)
@@ -81,7 +81,7 @@ io.sockets.on('connection', function (socket) {
 		username = data.name;
 		var userColor = data.color;
 		var userNote = data.note;
-        var userLocation = data.location;
+		var userLocation = data.location;
 
 		if(username == "theater"){
 			theaterID = socket.id;
@@ -93,7 +93,7 @@ io.sockets.on('connection', function (socket) {
 			console.log("Hello Controller: " + controllerID);
 		}
 
-		if(username != "theater" || username != "controller") {
+		if(username != "theater" && username != "controller") {
 			ioClients.push(socket.id);
 		}
 
@@ -110,13 +110,13 @@ io.sockets.on('connection', function (socket) {
 		//socket.broadcast.emit('chat', 'SERVER: A new user has connected: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
 		// socket.emit('bump', socket.username, "::dude::");
 		var title = getSection(currentSection);
-		console.log(currentSection);
+		console.log(currentSection, socket.id, socket.userColor, socket.userLocation, socket.userNote);
 
 		socket.emit('setSection', {sect: currentSection, title: title});
 		// io.sockets.emit('setSection', {sect: sect, title: title});
-		
-		oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation, socket.userNote);
-        });
+		if(username != "theater" && username != "controller") {
+			oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
+		}
 	});
 
 	 socket.on('disconnect', function() {
@@ -152,16 +152,16 @@ io.sockets.on('connection', function (socket) {
 		// TODO: Take out all the socket.broadcast.emits.
 		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
 
-	    if(io.sockets.connected[theaterID]!== null) {
+	    if(io.sockets.connected[theaterID]!= null) {
 	        io.sockets.connected[theaterID].emit('itemback', {phrase: data, color: socket.userColor}, 1);
 	    }
 		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
-		oscClient.send('/causeway/phrase/number', data, socket.userLocation, socket.userColor);
+		oscClient.send('/causeway/phrase/number', socket.id, data);
 	});
 
 	socket.on('triggerCauseway', function(data) {
-                oscClient.send('/causeway/triggerCauseway', socket.id);
-        });
+		oscClient.send('/causeway/triggerCauseway', socket.id);
+	});
 
 	socket.on('slider', function(data) {
 		console.log("slider! " + data);

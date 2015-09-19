@@ -9,13 +9,12 @@
 
 		<link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
 
-		<script type="text/javascript" src="js/Tone.min.js"></script>
-        <script type="text/javascript" src="js/nexusUI.js"></script>
-
 		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="js/Tone.min.js"></script>
+		
 	</head>
 	<body>
-
+		
 		<div class="sec sw">
 			<h1 onclick="causeSound.triggerCauseway();">Causeway</h1>
 			<p>Words | <strong>Vincent A. Cellucci</strong></p>
@@ -23,39 +22,53 @@
 			<p>Visuals | <strong>Derick Ostrenko</strong></p>
 			<p><em>Instructions: Tapping is the new snapping.</em></p>
 			
-			<svg version="1.1" x="0px" y="0px" viewBox="0 0 640 480">
-	<style>
-		.st0{
-			fill:none;stroke:#4D4D4D;
-			stroke-width:6;
-			stroke-miterlimit:10;
-
-		}
-	</style>
-
-	<path class="st0" d="M412.9,127.5c-130.8,62.6-278,62.6-408.9,0C24.5,86.4,45,45.2,65.5,4c92.4,43.5,193.6,43.5,286,0
-		C371.9,45.2,392.4,86.4,412.9,127.5z"/>
-	<line class="st0" x1="159.1" y1="30.7" x2="136.7" y2="168.4"/>
-	<line class="st0" x1="257.9" y1="30.7" x2="279.5" y2="168.4"/>
-	<path class="st0" d="M382.5,64.3c-111.4,54.3-236.2,54.3-347.7,0"/>
-	<line class="st0" x1="53.3" y1="251" x2="368.3" y2="251"/>
-	<rect x="53.3" y="199" class="st0" width="315" height="35"/>
-
-</svg>
-
+			<div id="seatMapDiv" style="padding-right: 25px;">
+				<svg version="1.1" id="seatMap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					 viewBox="0 0 640 445" style="max-width: 50vh; enable-background:new 0 0 640 445;" xml:space="preserve">
+				<rect x="4" y="4" style="fill:none;stroke:#B3B3B3;stroke-width:8;stroke-miterlimit:10;" width="632" height="437"/>
+				<g>
+					<path style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" d="M623,316.7c-87.7,66.7-192,107.6-303,107.6
+						c-111,0-215.3-40.9-303-107.6c29-51.5,58-103.1,87-154.6c132.1,99.5,299.9,99.5,432,0C565,213.7,594,265.2,623,316.7z"/>
+				</g>
+				<rect x="77.5" y="53.6" style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" width="485.1" height="52.5"/>
+				<line style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" x1="77" y1="25" x2="563" y2="25"/>
+				</svg>
+			</div>
 		</div>
 
 		<div id="causeway-text"></div>
 
 		<script>
+			seatMap.addEventListener("click", getClickPosition, false);
+
+			function getClickPosition(e) {
+				var m = seatMap.getScreenCTM();
+				var dh = document.getElementById('seatMap').clientHeight;
+				var dw = document.getElementById('seatMap').clientWidth;
+				var p = document.getElementById('seatMap').createSVGPoint(); 
+				p.x = e.clientX;
+				p.y = e.clientY;
+				p = p.matrixTransform(m.inverse());
+				console.log(p);
+    			// var xPosition = e.clientX;
+    			// var yPosition = e.clientY;
+    			// var mx = xPosition/dw;
+    			// var my = yPosition/dh;
+    			// console.log(dw, dh);
+    			// console.log(xPosition, yPosition);
+    			// console.log(mx, my);
+			}
+
 			var socket = io.connect(':8000/');
 			var myColor = getRandomColor();
+			var myLocation = [0.5, 0.5];	// Default centered
 			document.getElementsByTagName("body")[0].style.borderLeft = "15px solid " + myColor;
-
-			// socket.emit('addme', {name: "a_user", color: myColor});
-
-			registerWithServer();
-
+			
+			function registerWithServer() {
+				socket.emit('addme', {name: "a_user", color: myColor, note: causeSound.pitch, location: myLocation});
+				// document.getElementByID("overlay").style.display = 'none';
+			}
+			
 			socket.on('chat', function(data){
 				console.log("chat: " + data);
 			});
@@ -63,7 +76,7 @@
 			socket.on('setSection', function(data) {
 				console.log(data);
 				console.log("the section is now: " + data.title);
-
+				
 				if(data.title == "Welcome") {
 					scrollto(data.sect);
 				}
@@ -145,52 +158,51 @@
 				return color;
 			}
 
-			function registerWithServer() {
-            	socket.emit('addme', {name: "a_user", color: myColor, note: causeSound.Pitch, location: myLocation});
-            	document.getElementByID("overlay").style.display = 'none';
-    		}
 
-    		var CauseSound = function () {
-	            this.tone = new Tone();
-	            this.synth = new Tone.SimpleSynth({
-	                    "oscillator" : {
-	                            "type" : "sine"
-	             },
-	             "envelope" : {
-	                    "attack" : 2.0,
-	                    "decay" : 0.5,
-	                    "sustain" : 0.8,
-	                    "release" : 2.0
-	             }
-	            }).toMaster();
-
-	            this.player = new Tone.Player("data/wavs/001-Causeway.wav").toMaster();
-
-	            this.pitchCollection = [55, 57, 59, 61, 62, 64, 66, 67, 68, 69, 71, 73, 75, 76, 78, 80, 82, 83];
-
-	            this.pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
-
-
-	            this.playPitch = function () {
-	                    this.synth.triggerAttackRelease(this.tone.midiToNote(this.pitch), 5);
-	            }
-
-	            this.playCauseway = function() {
-	                    this.player.start();
-	            }
-
-	            this.triggerCauseway = function() {
-	                     this.synth.triggerAttackRelease(this.tone.midiToNote(this.pitch), 5);
-	                     this.player.start();
-	                     socket.emit('triggerCauseway', causeSound.Pitch);
-	             }
-            }
-
-            var causeSound = new CauseSound();
-            var myLocation = {};
-
-            causeSound.playPitch();
-
+			var CauseSound = function () {
+				this.tone = new Tone();
+				this.synth = new Tone.SimpleSynth({
+					"oscillator" : {
+						"type" : "sine"
+				 },
+				 "envelope" : {
+				 	"attack" : 2.0,
+					"decay" : 0.5,
+					"sustain" : 0.8,
+					"release" : 2.0
+				 }
+				}).toMaster();
+				
+				this.player = new Tone.Player("data/wavs/001-Causeway.wav").toMaster();
+				
+				this.pitchCollection = [55, 57, 59, 61, 62, 64, 66, 67, 68, 69, 71, 73, 75, 76, 78, 80, 82, 83];
+				
+				this.pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+				
+				
+				this.playPitch = function () {
+					this.synth.triggerAttackRelease(this.tone.midiToNote(this.pitch), 5);
+				}
+				
+				this.playCauseway = function() {
+					this.player.start();
+				}
+				
+				this.triggerCauseway = function() {
+					this.synth.triggerAttackRelease(this.tone.midiToNote(this.pitch), 5);
+					this.player.start();
+					socket.emit('triggerCauseway', causeSound.pitch);
+				}
+			}
+			
+			var causeSound = new CauseSound();
+			
+			causeSound.playPitch();
+			
+			//socket.emit('addme', {name: "a_user", color: myColor, note: causeSound.pitch, location: myLocation});
+			
+			registerWithServer();
+			
 		</script>
 
 	</body>
