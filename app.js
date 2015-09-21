@@ -110,7 +110,10 @@ io.sockets.on('connection', function (socket) {
 		//socket.broadcast.emit('chat', 'SERVER: A new user has connected: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
 		// socket.emit('bump', socket.username, "::dude::");
 		var title = getSection(currentSection);
-		console.log(currentSection, socket.id, socket.userColor, socket.userLocation, socket.userNote);
+		
+		if(username != "theater" && username != "controller") {
+			console.log(currentSection, socket.id, socket.userColor, socket.userLocation, socket.userNote);
+		}
 
 		socket.emit('setSection', {sect: currentSection, title: title});
 		// io.sockets.emit('setSection', {sect: sect, title: title});
@@ -148,7 +151,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('item' , function(data) {
-		console.log("item: " + data);
+		console.log(socket.id + " tapped item: " + data);
 		// TODO: Take out all the socket.broadcast.emits.
 		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
 
