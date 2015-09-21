@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html> 
 	<head>
 		<meta charset="utf-8">
 		<title>Causeway</title>
@@ -28,7 +28,7 @@
 				<g>
 					<path style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" d="M623,316.7c-87.7,66.7-192,107.6-303,107.6
 						c-111,0-215.3-40.9-303-107.6c29-51.5,58-103.1,87-154.6c132.1,99.5,299.9,99.5,432,0C565,213.7,594,265.2,623,316.7z"/>
-				</g>
+				</g> 
 				<rect x="77.5" y="53.6" style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" width="485.1" height="52.5"/>
 				<line style="fill:none;stroke:#4D4D4D;stroke-width:8;stroke-miterlimit:10;" x1="77" y1="25" x2="563" y2="25"/>
 				</svg>
@@ -46,10 +46,14 @@
 		</div>
 
 
-
 		<div id="causeway-text"></div>
 
 		<script>
+			var socket = io.connect(':8000/');
+			var myColor = getRandomColor();
+			var myLocation = [0.5, 0.5];	// Default centered
+
+			document.getElementsByTagName("body")[0].style.borderLeft = "15px solid " + myColor;
 			seatMap.addEventListener("click", getClickPosition, false);
 
 			function getClickPosition(e) {
@@ -70,11 +74,6 @@
 				registerWithServer();
 			}
 
-			var socket = io.connect(':8000/');
-			var myColor = getRandomColor();
-			var myLocation = [0.5, 0.5];	// Default centered
-			document.getElementsByTagName("body")[0].style.borderLeft = "15px solid " + myColor;
-			
 			function registerWithServer() {
 				socket.emit('addme', {name: "a_user", color: myColor, note: causeSound.pitch, location: myLocation});
 				document.getElementsByClassName("sd")[0].style.display = 'none';
@@ -89,12 +88,7 @@
 				console.log(data);
 				console.log("the section is now: " + data.title);
 				
-				// if(data.title == "Welcome") {
-				// 	// scrollto(data.sect);
-				// }
-				
 				if(data.title !== undefined){
-					
 					var otherClasses = document.querySelectorAll('.sec');
 
 					for (var i = 0; i < otherClasses.length; i++) {
@@ -102,43 +96,32 @@
 					}
 
 					document.getElementsByClassName("s"+data.sect)[0].style.display = 'block';
-
-					// scrollto(data.sect);
-
 				}
 				
 			});
 
-			// function scrollto(element){ 
-			//      var ele = document.getElementsByClassName("s"+element)[0];
-			//      if (ele) {
-			//      	window.scrollTo(0, ele.offsetTop);
-			//      }
-			// }
+			function scrollto(element){ 
+				var ele = document.getElementsByClassName("s"+element)[0];
+			    if (ele) {
+			    	window.scrollTo(0, ele.offsetTop);
+			    }
+			}
 
 			socket.on('itemback', function(data){
 				console.log("itemback: " + data.phrase);
+
 				var elements = document.getElementsByClassName(data.phrase);
-				// for(var i = elements.length - 1; i >= 0; --i) {
-					elements[0].className += " clicked";
-					// elements[i].style.color = data.color;
-					// elements[i].style.backgroundColor = data.color;
-				// }
+				elements[0].className += " clicked";
 			});
 
 			function clickgo() {
 				var elements = document.getElementsByClassName(this.className);
-				// for(var i = elements.length - 1; i >= 0; --i) {
-					socket.emit('item', elements[0].className.split(" ")[1]);
-					// console.log(elements[i].className.split(" ")[1]);
-					elements[0].className += " clicked";
-					// elements[i].style.color = myColor;
-					elements[0].style.backgroundColor = myColor;
-				// }
+				socket.emit('item', elements[0].className.split(" ")[1]);
+				elements[0].className += " clicked";
+				elements[0].style.backgroundColor = myColor;
 			}
 
 			window.onload = function() {
-
 				var xhr= new XMLHttpRequest();
 				xhr.open('GET', 'data/causeway.html', true);
 				xhr.onreadystatechange= function() {
@@ -153,7 +136,6 @@
 					var phrases = document.getElementsByClassName('phrase');
 					for (var i = 0; i < phrases.length; i++) {
 						phrases[i].addEventListener("click", clickgo, false);
-						//phrases[i].addEventListener("touchstart", clickgo, false);
 					}
 				}
 
@@ -167,7 +149,6 @@
 				}
 				return color;
 			}
-
 
 			var CauseSound = function () {
 				this.tone = new Tone();
@@ -192,26 +173,21 @@
 				
 				this.playPitch = function () {
 					this.synth.triggerAttackRelease(this.tone.midiToNote(this.pitch), 5);
-				}
+				};
 				
 				this.playCauseway = function() {
 					this.player.start();
-				}
+				};
 				
 				this.triggerCauseway = function() {
 					this.synth.triggerAttackRelease(this.tone.midiToNote(this.pitch), 5);
 					this.player.start();
 					socket.emit('triggerCauseway', causeSound.pitch);
-				}
-			}
+				};
+			};
 			
 			var causeSound = new CauseSound();
-			
 			causeSound.playPitch();
-			
-			//socket.emit('addme', {name: "a_user", color: myColor, note: causeSound.pitch, location: myLocation});
-			
-			
 			
 		</script>
 
