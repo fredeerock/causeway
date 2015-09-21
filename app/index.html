@@ -15,7 +15,7 @@
 	</head>
 	<body>
 		<div class="sec sw">
-			<h1 onclick="causeSound.triggerCauseway();">Causeway</h1>
+			<h1 onclick="causeSound.triggerCauseway();"><span class="mainTitle">Causeway</span></h1>
 			
 			<div class="sd" style="padding-right: 25px;">
 				<p>Words | <strong>Vincent A. Cellucci</strong></p>
@@ -180,6 +180,10 @@
 					this.synth.triggerAttackRelease(this.tone.midiToNote(this.pitch), 5);
 					this.player.start();
 					socket.emit('triggerCauseway', causeSound.pitch);
+					
+					var elements = document.getElementsByClassName("mainTitle");
+					// elements[0].className += " clicked";
+					elements[0].style.backgroundColor = myColor;
 				};
 			};
 			
