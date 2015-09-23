@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Causeway | Theater</title>
-	<link rel="stylesheet" href="styles/mobile.css">
+	<link rel="stylesheet" href="styles/mobileOne.css">
 	<link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
 	<script src="/socket.io/socket.io.js"></script>
 </head>
@@ -29,7 +29,7 @@
 			document.getElementsByTagName('video')[0].play();
 		}
 
- 		var socket = io.connect(':8000/');
+ 		var socket = io.connect('130.39.92.112:8000/');
  		socket.emit('addme', {name: "mobileOne"});
 
  		socket.on('chat', function(data) {
@@ -158,7 +158,7 @@
 
 	</script>
 
-	<video autoplay muted loop id="bgvid">
+	<video autoplay muted loop id="bgvid" webkit-playsinline>>
 	    <source src="data/therm.mp4" type="video/mp4">
 	</video>
 	

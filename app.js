@@ -151,7 +151,7 @@ io.sockets.on('connection', function (socket) {
 		// TODO: Take out all the socket.broadcast.emits.
 		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
 
-	    if(io.sockets.connected[theaterID]!= null) {
+	    if(io.sockets.connected[theaterID]!== null) {
 	        io.sockets.connected[theaterID].emit('itemback', {phrase: data, color: socket.userColor}, 1);
 	    }
 		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
@@ -160,6 +160,10 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('triggerCauseway', function(data) {
 		oscClient.send('/causeway/triggerCauseway', socket.id);
+	});
+
+	socket.on('triggerPitch', function(data) {
+		oscClient.send('/causeway/triggerPitch', socket.id);
 	});
 
 	socket.on('slider', function(data) {
@@ -209,7 +213,9 @@ io.sockets.on('connection', function (socket) {
 	sendSection = function (sect) {
 		var title = getSection(sect);
 		io.sockets.emit('setSection', {sect: sect, title: title});
-		oscClient.send('/setSection', sect, title);
+		// oscClient.send('/setSection', sect, title);
+		oscClient.send('/causeway/currentSection', sect);
+
 	};
 
 		// Section shared from Max to UIs
