@@ -3,7 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Causeway</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
 
 		<link rel="stylesheet" href="styles/main.css">
 
@@ -88,6 +90,11 @@
 			socket.on('setSection', function(data) {
 				console.log(data);
 				console.log("the section is now: " + data.title);
+
+				if (data.sect == "15") {
+					// Tone.startMobile();
+					causeSound.playBrought();
+				}
 				
 				if(data.title !== undefined){
 					var otherClasses = document.querySelectorAll('.sec');
@@ -166,6 +173,8 @@
 				}).toMaster();
 				
 				this.player = new Tone.Player("data/wavs/001-Causeway.wav").toMaster();
+				this.player2 = new Tone.Player("data/wavs/204-who%20had%20brought%20this%20one%20.wav").toMaster();
+
 				
 				this.pitchCollection = [55, 57, 59, 61, 62, 64, 66, 67, 68, 69, 71, 73, 75, 76, 78, 80, 82, 83];
 				
@@ -183,6 +192,10 @@
 				
 				this.playCauseway = function() {
 					this.player.start();
+				};
+
+				this.playBrought = function() {
+					this.player2.start();
 				};
 				
 				this.triggerCauseway = function() {
