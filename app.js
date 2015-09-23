@@ -42,7 +42,7 @@ oscServer.on("message", function (msg, rinfo) {
 });
 
 		// oscClient is used to send osc messages (to Max)
-var oscClient = new osc.Client('167.96.105.8', 7745);
+var oscClient = new osc.Client('130.39.95.124', 7745);
 
 
 	// server is the node server (web app via express)
@@ -93,14 +93,12 @@ io.sockets.on('connection', function (socket) {
 			console.log("Hello Controller: " + controllerID);
 		}
 
-		if(username != "theater" && username != "controller") {
+		if(username == "a_user") {
 			ioClients.push(socket.id);
 		}
 
 		socket.username = username;  // allows the username to be retrieved anytime the socket is used
 		// Can add any other pertinent details to the socket to be retrieved later
-		// socket.location, etc.
-		// var userColor = getRandomColor();
 		socket.userLocation = userLocation;
 		socket.userColor = userColor;
 		socket.userNote = userNote;
@@ -111,32 +109,30 @@ io.sockets.on('connection', function (socket) {
 		// socket.emit('bump', socket.username, "::dude::");
 		var title = getSection(currentSection);
 		
-		if(username != "theater" && username != "controller") {
-			console.log(currentSection, socket.id, socket.userColor, socket.userLocation, socket.userNote);
+		if(username == "a_user") {
+			console.log("Hello:", socket.username, "currentSection:", currentSection, "id:", socket.id, "userColor:", socket.userColor, "userLocation:", socket.userLocation, "userNote:", socket.userNote);
 		}
 
 		socket.emit('setSection', {sect: currentSection, title: title});
 		// io.sockets.emit('setSection', {sect: sect, title: title});
-		if(username != "theater" && username != "controller") {
+		if(username == "a_user") {
 			oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
 		}
 	});
 
 	 socket.on('disconnect', function() {
-			// ioClients.remove(socket.id);	// FIXME: Remove client if they leave
-			io.sockets.emit('chat', 'SERVER: ' + socket.id + ' has left the building');
+		// ioClients.remove(socket.id);	// FIXME: Remove client if they leave
+		io.sockets.emit('chat', 'SERVER: ' + socket.id + ' has left the building');
 	 });
 
 	 socket.on('sendchat', function(data) {
 		// Transmit to everyone who is connected //
-			io.sockets.emit('chat', socket.username, data);
+		io.sockets.emit('chat', socket.username, data);
 	 });
 
 	socket.on('tap', function(data) {
 		console.log("Data: ", data.inspect);
-
 		oscClient.send('/tapped', 1);
-
 		socket.broadcast.emit('tapped', socket.username, 1);
 	});
 
@@ -173,7 +169,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 
-			// Return random user name
+	// Return random user name
 	socket.on('getSomebody', function(data) {
 		console.log("Get Somebody! ");
 
@@ -191,7 +187,7 @@ io.sockets.on('connection', function (socket) {
 
 
 	socket.on('section', function(data) {
-		console.log("Section: "+ data);
+		console.log("Section is now: "+ data);
 		currentSection = data;
 		sendSection(currentSection);
 	})
