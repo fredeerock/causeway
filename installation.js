@@ -10,44 +10,44 @@
 // ************************************************
 
 
-	// Setup web app - using express to serve pages
+// Setup web app - using express to serve pages
 var express = require('express'),
-		sio = require('socket.io'),
-		http = require('http');
+	sio = require('socket.io'),
+	http = require('http');
 
 var app = express();
-		// set up express web application
-	// app.configure(function () {
-		app.use(express.static(__dirname + '/installation'));
-		// app.use(app.router);
-	// });
 
-		// FIXME: probably don't need this
-	app.get('/', function (req, res) {
-		res.send('hello');
-	});
+// set up express web application
+// app.use(express.static(__dirname + '/m')); // COMMENTED THIS OUT SO APP.JS SERVES CONTENT
 
-	//	OSC Setup for sending (and receiving) OSC (to Max)
+// FIXME: probably don't need this
+app.get('/', function (req, res) {
+	res.send('hello');
+});
+
+//	OSC Setup for sending (and receiving) OSC (to Max)
 var osc = require('node-osc');
-		// oscServer is used for receiving osc messages (from Max)
+
+// oscServer is used for receiving osc messages (from Max)
 var oscServer = new osc.Server(7746, '127.0.0.1');
+
 oscServer.on("message", function (msg, rinfo) {
-			// console.log("OSC message:");
-			// console.log(msg);
-					// Setup messages to receive here //
-	if(msg[0] = "/goToSection") {
+	// console.log("OSC message:");
+	// console.log(msg);
+
+	// Setup messages to receive here //
+	if(msg[0] == "/goToSection") {
 		currentSection = msg[1];
 		shareSection(currentSection);
 	}
 });
 
-		// oscClient is used to send osc messages (to Max)
+// oscClient is used to send osc messages (to Max)
 var oscClient = new osc.Client('130.39.95.124', 7745);
 
-
-	// server is the node server (web app via express)
-		// this code launches the server on port 80 and switches the user id away from sudo
-		// apparently this makes it more secure - if something goes awry it isn't running under the superuser.
+// server is the node server (web app via express)
+// this code launches the server on port 80 and switches the user id away from sudo
+// apparently this makes it more secure - if something goes awry it isn't running under the superuser.
 var server = http.createServer(app)
 	.listen(8001, function(err) {
 		if (err) return cb(err);
@@ -179,9 +179,9 @@ io.sockets.on('connection', function (socket) {
 
 		var user = getNextUser();
 					// Make sure you don't get yourself
-		if(user.username == socket.username || user.username == null) {
+		if(user.username == socket.username || user.username === null) {
 			user = getNextUser();
-			if(user.username == socket.username || user.username == null) {
+			if(user.username == socket.username || user.username === null) {
 				socket.emit("somebodyToYou","Somebody");
 			}
 		} else {
@@ -194,7 +194,7 @@ io.sockets.on('connection', function (socket) {
 		console.log("Section is now: "+ data);
 		currentSection = data;
 		sendSection(currentSection);
-	})
+	});
 
 	// *********************
 			// Functions for handling stuff
