@@ -32,6 +32,12 @@
 
 		<div id="causeway-text"></div>
 
+		<div class="buttons" style="display: none;">
+			<a onclick="nextButton(-1)" class="myButton">Prev</a> 
+			<a onclick="nextButton(1)" class="myButton">Next</a>
+		</div>
+
+
 		<script>
 			var socket = io.connect('130.39.92.112:8001/');
 			var myColor = getRandomColor();
@@ -41,7 +47,7 @@
 			document.getElementsByTagName("body")[0].style.borderLeft = "15px solid " + myColor;
 
 			function startButton() {
-				socket.emit("section", secNum);
+				// socket.emit("section", secNum);
 				// document.getElementById("causeway-text").style.display = 'block';
 				var otherClasses = document.querySelectorAll('.sec');
 
@@ -50,11 +56,22 @@
 				}
 
 				document.getElementsByClassName("s"+secNum)[0].style.display = 'block';
+				document.getElementsByClassName("buttons")[0].style.display = 'block';
 				registerWithServer();
 			}
 
-			function nextButton() {
-				secNum++;
+			function nextButton(number) {
+				console.log(secNum);
+
+				if(number == -1 && secNum > 0) {
+					secNum = secNum - 1;
+					socket.emit("section", secNum);
+				}
+
+				if(number == 1 && secNum < 33) {
+					secNum = secNum + 1;
+					socket.emit("section", secNum);
+				}
 
 				var otherClasses = document.querySelectorAll('.sec');
 
@@ -78,6 +95,7 @@
 			});
 
 			socket.on('setSection', function(data) {
+				secNum = data.sect;
 				console.log(data);
 				console.log("the section is now: " + data.title);
 
