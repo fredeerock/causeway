@@ -18,7 +18,7 @@ var express = require('express'),
 var app = express();
 
 // set up express web application
-// app.use(express.static(__dirname + '/m')); // COMMENTED THIS OUT SO APP.JS SERVES CONTENT
+app.use(express.static(__dirname + '/app/m')); // COMMENTED THIS OUT SO APP.JS SERVES CONTENT
 
 // FIXME: probably don't need this
 app.get('/', function (req, res) {
@@ -29,7 +29,7 @@ app.get('/', function (req, res) {
 var osc = require('node-osc');
 
 // oscServer is used for receiving osc messages (from Max)
-var oscServer = new osc.Server(7746, '127.0.0.1');
+var oscServer = new osc.Server(9746, '127.0.0.1');
 
 oscServer.on("message", function (msg, rinfo) {
 	// console.log("OSC message:");
@@ -43,7 +43,7 @@ oscServer.on("message", function (msg, rinfo) {
 });
 
 // oscClient is used to send osc messages (to Max)
-var oscClient = new osc.Client('130.39.95.124', 7745);
+var oscClient = new osc.Client('130.39.95.124', 9745);
 
 // server is the node server (web app via express)
 // this code launches the server on port 80 and switches the user id away from sudo
