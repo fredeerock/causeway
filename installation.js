@@ -151,7 +151,7 @@ io.sockets.on('connection', function (socket) {
 		// TODO: Take out all the socket.broadcast.emits.
 		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
 
-	    if(io.sockets.connected[theaterID]!== null) {
+	    if(io.sockets.connected[theaterID]!== null || io.sockets.connected[theaterID]!== undefined) {
 	        io.sockets.connected[theaterID].emit('itemback', {phrase: data, color: socket.userColor}, 1);
 	    }
 		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);

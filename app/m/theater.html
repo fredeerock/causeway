@@ -27,7 +27,7 @@
 
 	<script>
 
- 		var socket = io.connect(':8001/');
+ 		var socket = io.connect('130.39.92.112:8001/');
  		socket.emit('addme', {name: "theater"});
 		
 		socket.on('chat', function(data) {

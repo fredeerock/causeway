@@ -1,7 +1,7 @@
 body {
-	display: flex;
+/*	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: center;*/
 	font-family: 'Vollkorn', serif;
 	font-size: 1.1em;
 	background-color: black;
@@ -11,6 +11,8 @@ body {
 #causeway-text {
 	white-space: pre;
 	font-size: 1.3em;
+  margin: auto;
+  width: 60%;
 }
 
 #causeway-text h1{
