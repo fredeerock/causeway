@@ -43,7 +43,7 @@ oscServer.on("message", function (msg, rinfo) {
 });
 
 // oscClient is used to send osc messages (to Max)
-var oscClient = new osc.Client('130.39.95.124', 9745);
+var oscClient = new osc.Client('167.96.5.153', 9745);
 
 // server is the node server (web app via express)
 // this code launches the server on port 80 and switches the user id away from sudo
