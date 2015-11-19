@@ -16,21 +16,13 @@ var express = require('express'),
 		http = require('http');
 
 var app = express();
-		// set up express web application
-	// app.configure(function () {
-		app.use(express.static(__dirname + '/app'));
-		// app.use(app.router);
-	// });
 
-		// FIXME: probably don't need this
-	app.get('/', function (req, res) {
-		res.send('hello');
-	});
+app.use(express.static(__dirname + '/app'));
 
 	//	OSC Setup for sending (and receiving) OSC (to Max)
 var osc = require('node-osc');
 		// oscServer is used for receiving osc messages (from Max)
-var oscServer = new osc.Server(7746, '127.0.0.1');
+var oscServer = new osc.Server(7746, '167.96.127.8');
 oscServer.on("message", function (msg, rinfo) {
 			// console.log("OSC message:");
 			// console.log(msg);
@@ -42,7 +34,7 @@ oscServer.on("message", function (msg, rinfo) {
 });
 
 		// oscClient is used to send osc messages (to Max)
-var oscClient = new osc.Client('130.39.95.124', 7745);
+var oscClient = new osc.Client('167.96.127.8', 7745);
 
 
 	// server is the node server (web app via express)
