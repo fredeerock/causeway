@@ -16,7 +16,7 @@
 			<p>Visuals | <strong>Derick Ostrenko</strong></p>
 			<br>
 			<p><em>Tapping is the new snapping. Navigate your mobile device to the URL below to participate:</em></p>
-			<h2>http://emdm.io</h2>
+			<h2>http://emdm.io/m</h2>
 			<p>If you need WiFi use...<br>
 			Network: eduroam<br>
 			Username: digitalart@lsu.edu<br>
@@ -26,8 +26,8 @@
 <div id="causeway-text"></div>
 
 	<script>
-
- 		var socket = io.connect('130.39.92.112:8001/');
+		var socket = io.connect('http://emdm.io/', { path: '/sio/socket.io' });
+ 		// var socket = io.connect('http://emdm.io/sio');
 		//var socket = io.connect('127.0.0.1:8001/');
  		socket.emit('addme', {name: "theater"});
 		

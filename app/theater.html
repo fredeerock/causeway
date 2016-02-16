@@ -27,7 +27,8 @@
 
 	<script>
 
- 		var socket = io.connect('130.39.92.112:8000/');
+ 		// var socket = io.connect('130.39.92.112:8000/');
+ 		var socket = io.connect('https://atlab.cct.lsu.edu/', { path: '/causeway/socket.io'} );
  		socket.emit('addme', {name: "theater"});
 		
 		socket.on('chat', function(data) {
