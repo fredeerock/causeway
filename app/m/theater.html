@@ -66,16 +66,19 @@
 			}
 			
 			if(data.title !== undefined){
-				console.log("trying");
+				console.log("trying1");
 				var otherClasses = document.querySelectorAll('.sec'),
 				    i = 0,
 				    l = otherClasses.length;
 
 				for (i; i < l; i++) {
+									console.log("trying2");
+
 				    otherClasses[i].style.display = 'none';
 				}
 				
 				try{
+					console.log("trying3");
 					document.getElementsByClassName("s"+data.sect)[0].style.display = 'block';
 					scrollto(data.sect);
 				}
