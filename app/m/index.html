@@ -71,21 +71,25 @@
 				if(number == -1 && secNum == 0) {
 					secNum = 33;
 					socket.emit("section", secNum);
+					number = 0;
 				}
 
 				if(number == -1 && secNum > 0) {
 					secNum = secNum - 1;
 					socket.emit("section", secNum);
+					number = 0;
 				}
 
 				if(number == 1 && secNum < 33) {
 					secNum = secNum + 1;
 					socket.emit("section", secNum);
+					number = 0;
 				}
 
 				if(number == 1 && secNum == 33) {
 					secNum = 0;
 					socket.emit("section", secNum);
+					number = 0;
 				}
 				
 				causeSound.loadSection(secNum);
