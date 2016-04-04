@@ -18,7 +18,7 @@ var express = require('express'),
 var app = express();
 
 // set up express web application
-app.use(express.static(__dirname + '/app')); // COMMENTED THIS OUT SO APP.JS SERVES CONTENT
+app.use(express.static(__dirname + '/app'));
 
 // FIXME: probably don't need this
 // app.get('/', function (req, res) {
