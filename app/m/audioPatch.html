@@ -9,7 +9,7 @@
 
 	<link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
 
-	<script src="/socket.io/socket.io.js"></script>
+	<script src="/m/socket.io/socket.io.js"></script>
 	<!-- <script type="text/javascript" src="js/Tone.min.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
@@ -27,7 +27,7 @@
 <script>
 
 	// var socket = io.connect('127.0.0.1:8000');
-	var socket = io.connect(window.location.origin , {transports:['websocket']} );
+	var socket = io.connect(window.location.origin, {path: '/m/socket.io'});
 	// var socket = io.connect('https://atlab.cct.lsu.edu/', { path: '/causeway/socket.io' });
 	
 	var myColor = getRandomColor();
