@@ -70,6 +70,8 @@ var ioClients = [];		// list of clients who have logged in.
 var currentSection = 0;		// current section.
 var theaterID;
 var conrollerID;
+var audioControllerID;
+
 
 // *********************
 
@@ -92,6 +94,11 @@ io.sockets.on('connection', function (socket) {
 			controllerID = socket.id;
 			console.log("Hello Controller: " + controllerID);
 		}
+		
+		if(username == "audio_controller"){
+			audioControllerID = socket.id;
+			console.log("Hello Audio Controller: " + audioControllerID);
+		}
 
 		if(username == "a_user") {
 			ioClients.push(socket.id);
@@ -110,13 +117,17 @@ io.sockets.on('connection', function (socket) {
 		var title = getSection(currentSection);
 		
 		if(username == "a_user") {
-			console.log("Hello:", socket.username, "currentSection:", currentSection, "id:", socket.id, "userColor:", socket.userColor, "userLocation:", socket.userLocation, "userNote:", socket.userNote);
+			// console.log("Hello:", socket.username, "currentSection:", currentSection, "id:", socket.id, "userColor:", socket.userColor, "userLocation:", socket.userLocation, "userNote:", socket.userNote);
 		}
 
 		socket.emit('setSection', {sect: currentSection, title: title});
 		// io.sockets.emit('setSection', {sect: sect, title: title});
 		if(username == "a_user") {
-			oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
+			//oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
+			if(audioControllerID) {
+					io.to(audioControllerID).emit('/causeway/registerUser', {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote}, 1);
+				// console.log("Added New User", {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote});
+	    }
 		}
 	});
 
@@ -131,8 +142,8 @@ io.sockets.on('connection', function (socket) {
 	 });
 
 	socket.on('tap', function(data) {
-		console.log("Data: ", data.inspect);
-		oscClient.send('/tapped', 1);
+		// console.log("Data: ", data.inspect);
+		// oscClient.send('/tapped', 1);
 		socket.broadcast.emit('tapped', socket.username, 1);
 	});
 
@@ -142,7 +153,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('location', function(data) {
 		if(data) {
-			oscClient.send('/location', data[0], data[1]);
+			// oscClient.send('/location', data[0], data[1]);
 		}
 	});
 
@@ -151,25 +162,29 @@ io.sockets.on('connection', function (socket) {
 		// TODO: Take out all the socket.broadcast.emits.
 		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
 
-	    if(io.sockets.connected[theaterID]!== null || io.sockets.connected[theaterID]!== undefined) {
-	        io.sockets.connected[theaterID].emit('itemback', {phrase: data, color: socket.userColor}, 1);
+	    if(theaterID) {
+					io.to(theaterID).emit('itemback', {phrase: data, color: socket.userColor}, 1);
 	    }
 		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
-		oscClient.send('/causeway/phrase/number', socket.id, data);
+		// oscClient.send('/causeway/phrase/number', socket.id, data);
+		if(audioControllerID) {
+				io.to(audioControllerID).emit('/causeway/phrase/number', {id: socket.id, item: data}, 1);
+				// console.log("Item", data);
+    }
 	});
 
 	socket.on('triggerCauseway', function(data) {
-		oscClient.send('/causeway/triggerCauseway', socket.id);
+		// oscClient.send('/causeway/triggerCauseway', socket.id);
+		if(audioControllerID) {
+				io.to(audioControllerID).emit('/causeway/triggerCauseway', {id: socket.id}, 1);
+    }
 	});
 
 	socket.on('triggerPitch', function(data) {
-		oscClient.send('/causeway/triggerPitch', socket.id);
-	});
-
-	socket.on('slider', function(data) {
-		console.log("slider! " + data);
-
-		oscClient.send('/slider', socket.username, data);
+		// oscClient.send('/causeway/triggerPitch', socket.id);
+		if(audioControllerID) {
+        io.to(audioControllerID).emit('/causeway/triggerPitch', {id: socket.id}, 1);
+    }
 	});
 
 
@@ -191,7 +206,7 @@ io.sockets.on('connection', function (socket) {
 
 
 	socket.on('section', function(data) {
-		console.log("Section is now: "+ data);
+		// console.log("Section is now: "+ data);
 		currentSection = data;
 		sendSection(currentSection);
 	});
@@ -214,7 +229,11 @@ io.sockets.on('connection', function (socket) {
 		var title = getSection(sect);
 		io.sockets.emit('setSection', {sect: sect, title: title});
 		// oscClient.send('/setSection', sect, title);
-		oscClient.send('/causeway/currentSection', sect);
+		// oscClient.send('/causeway/currentSection', sect);
+		if(audioControllerID) {
+				io.to(audioControllerID).emit('/causeway/currentSection', {section: sect, title: title}, 1);
+				// console.log("Section sent", sect);
+    }
 
 	};
 
