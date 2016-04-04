@@ -29,8 +29,8 @@
 		// var socket = io.connect('http://emdm.io/', { path: '/sio/socket.io' });
 		// var socket = io.connect(window.location.origin , {transports:['websocket']} );
 		// var socket = io.connect(window.location.origin, {path: '/sio/socket.io'}, {transports:['websocket']} );
-		console.log("window.location.origin:", window.location.origin, {path: '/m/socket.io'});
-		var socket = io.connect(window.location.origin);
+		console.log("window.location.origin:", window.location.origin);
+		var socket = io.connect(window.location.origin, {path: '/m/socket.io'});
 
  		// var socket = io.connect('http://emdm.io/sio');
 		//var socket = io.connect('127.0.0.1:8001/');
