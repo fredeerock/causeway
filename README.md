@@ -6,4 +6,4 @@ Causeway is an interactive poetry app and performance written by Vincent Cellucc
 - [ ] Fix landing page reference to theater
 - [ ] Fix Theater view so it refreshes on the proper section.
 - [x] Fix Theater view so its not just the last one that receives the colors
-- [ ] make last next button return to beginning
+- [x] Make last next button return to beginning

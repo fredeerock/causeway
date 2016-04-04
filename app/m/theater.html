@@ -61,12 +61,12 @@
 			console.log("the section is now: " + data.sect + ":" + data.title);
 			
 			if(data.title == "Welcome") {
-				console.log('yep');
+				console.log('welcome');
 				scrollto(data.sect);
 			}
 			
 			if(data.title !== undefined){
-				
+				console.log("trying");
 				var otherClasses = document.querySelectorAll('.sec'),
 				    i = 0,
 				    l = otherClasses.length;
