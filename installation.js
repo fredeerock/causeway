@@ -67,6 +67,7 @@ var io = sio.listen(server);
 	// Global Variables!
 
 var ioClients = [];		// list of clients who have logged in.
+var ioTheaters = [];
 var currentSection = 0;		// current section.
 var theaterID;
 var conrollerID;
@@ -87,6 +88,7 @@ io.sockets.on('connection', function (socket) {
 
 		if(username == "theater"){
 			theaterID = socket.id;
+			ioTheaters.push(socket.id);
 			console.log("Hello Theater: " + theaterID);
 		}
 
@@ -163,12 +165,13 @@ io.sockets.on('connection', function (socket) {
 		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
 
 	    if(theaterID) {
-					io.to(theaterID).emit('itemback', {phrase: data, color: socket.userColor}, 1);
+			// io.to(theaterID).emit('itemback', {phrase: data, color: socket.userColor}, 1);
+			io.sockets.emit('itemback', {phrase: data, color: socket.userColor}, 1);
 	    }
 		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
 		// oscClient.send('/causeway/phrase/number', socket.id, data);
 		if(audioControllerID) {
-				io.to(audioControllerID).emit('/causeway/phrase/number', {id: socket.id, item: data}, 1);
+			io.to(audioControllerID).emit('/causeway/phrase/number', {id: socket.id, item: data}, 1);
 				// console.log("Item", data);
     }
 	});
