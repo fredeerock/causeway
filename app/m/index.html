@@ -39,11 +39,11 @@
 
 
 		<script>
-			// var socket = io.connect('http://emdm.io/sio');
-			//var socket = io.connect('http://emdm.io/', { path: '/sio/socket.io' });
-			var socket = io.connect(window.location.origin);
-			// var socket = io.connect(window.location.origin , {transports:['websocket']} );
-			//var socket = io.connect('127.0.0.1:8001/');
+			// var socket = io.connect('http://emdm.io/', { path: '/sio/socket.io' });
+			// var socket = io.connect(window.location.origin, {path: '/sio/socket.io'});
+			console.log("window.location.origin:", window.location.origin);
+			var socket = io.connect(window.location.origin); 
+
 			var myColor = getRandomColor();
 			var myLocation = [0.5, 0.5];	// Default centered
 			var secNum = 0;
