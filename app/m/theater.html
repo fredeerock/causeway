@@ -59,6 +59,7 @@
 
 		socket.on('setSection', function(data) {
 			console.log("the section is now: " + data.sect + ":" + data.title);
+			firstsect = data.sect;
 			
 			if(data.title == "Welcome") {
 				console.log('welcome');
@@ -66,19 +67,15 @@
 			}
 			
 			if(data.title !== undefined){
-				console.log("trying1");
 				var otherClasses = document.querySelectorAll('.sec'),
 				    i = 0,
 				    l = otherClasses.length;
 
 				for (i; i < l; i++) {
-									console.log("trying2");
-
 				    otherClasses[i].style.display = 'none';
 				}
 				
 				try{
-					console.log("trying3");
 					scrollto(data.sect);
 					document.getElementsByClassName("s"+data.sect)[0].style.display = 'block';
 				}
@@ -90,6 +87,8 @@
 			}
 		});
 
+		var firstsect;
+
 		window.onload = function() {
 			var xhr= new XMLHttpRequest();
 			xhr.open('GET', 'data/causeway.html', true);
@@ -97,6 +96,16 @@
 			    if (this.readyState!==4) return;
 			    if (this.status!==200) return; // or whatever error handling you want
 			    document.getElementById("causeway-text").innerHTML= this.responseText;
+				
+				try{
+					scrollto(firstsect);
+					document.getElementsByClassName("s"+firstsect)[0].style.display = 'block';
+				}
+
+				catch(err){
+					console.log(err.message);
+				}
+
 			};
 			xhr.send();
 		};
