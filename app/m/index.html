@@ -68,17 +68,22 @@
 			function nextButton(number) {
 				console.log(secNum);
 
+				if(number == -1 && secNum == 0) {
+					secNum = 33;
+					socket.emit("section", secNum);
+				}
+
 				if(number == -1 && secNum > 0) {
 					secNum = secNum - 1;
 					socket.emit("section", secNum);
 				}
 
-				if(number == 1 && secNum <= 33) {
+				if(number == 1 && secNum < 33) {
 					secNum = secNum + 1;
 					socket.emit("section", secNum);
 				}
 
-				if(number == 1 && secNum >= 33) {
+				if(number == 1 && secNum == 33) {
 					secNum = 0;
 					socket.emit("section", secNum);
 				}
