@@ -77,6 +77,11 @@
 					secNum = secNum + 1;
 					socket.emit("section", secNum);
 				}
+
+				if(number ==1 && secNum ==33) {
+					secNum = 0;
+					socket.emit("section", secNum);
+				}
 				
 				causeSound.loadSection(secNum);
 

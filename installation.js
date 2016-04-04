@@ -88,7 +88,7 @@ io.sockets.on('connection', function (socket) {
 
 		if(username == "theater"){
 			theaterID = socket.id;
-			ioTheaters.push(socket.id);
+			// ioTheaters.push(socket.id);
 			console.log("Hello Theater: " + theaterID);
 		}
 
