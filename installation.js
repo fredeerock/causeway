@@ -21,9 +21,9 @@ var app = express();
 app.use(express.static(__dirname + '/app/m')); // COMMENTED THIS OUT SO APP.JS SERVES CONTENT
 
 // FIXME: probably don't need this
-app.get('/', function (req, res) {
-	res.send('hello');
-});
+// app.get('/', function (req, res) {
+// 	res.send('hello');
+// });
 
 //	OSC Setup for sending (and receiving) OSC (to Max)
 var osc = require('node-osc');
