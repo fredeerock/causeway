@@ -25,25 +25,6 @@ app.use(express.static(__dirname + '/app/m'));
 // 	res.send('hello');
 // });
 
-//	OSC Setup for sending (and receiving) OSC (to Max)
-var osc = require('node-osc');
-
-// oscServer is used for receiving osc messages (from Max)
-var oscServer = new osc.Server(9746, '127.0.0.1');
-
-oscServer.on("message", function (msg, rinfo) {
-	// console.log("OSC message:");
-	// console.log(msg);
-
-	// Setup messages to receive here //
-	if(msg[0] == "/goToSection") {
-		currentSection = msg[1];
-		shareSection(currentSection);
-	}
-});
-
-// oscClient is used to send osc messages (to Max)
-var oscClient = new osc.Client('167.96.5.153', 9745);
 
 // server is the node server (web app via express)
 // this code launches the server on port 80 and switches the user id away from sudo
@@ -125,7 +106,6 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('setSection', {sect: currentSection, title: title});
 		// io.sockets.emit('setSection', {sect: sect, title: title});
 		if(username == "a_user") {
-			//oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
 			if(audioControllerID) {
 					io.to(audioControllerID).emit('/causeway/registerUser', {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote}, 1);
 				// console.log("Added New User", {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote});
@@ -145,7 +125,6 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('tap', function(data) {
 		// console.log("Data: ", data.inspect);
-		// oscClient.send('/tapped', 1);
 		socket.broadcast.emit('tapped', socket.username, 1);
 	});
 
@@ -155,7 +134,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('location', function(data) {
 		if(data) {
-			// oscClient.send('/location', data[0], data[1]);
+			// send location somewhere?
 		}
 	});
 
@@ -169,7 +148,6 @@ io.sockets.on('connection', function (socket) {
 			io.sockets.emit('itemback', {phrase: data, color: socket.userColor}, 1);
 	    }
 		// socket.broadcast.emit('itemback', {phrase: data, color: socket.userColor}, 1);
-		// oscClient.send('/causeway/phrase/number', socket.id, data);
 		if(audioControllerID) {
 			io.to(audioControllerID).emit('/causeway/phrase/number', {id: socket.id, item: data}, 1);
 				// console.log("Item", data);
@@ -177,14 +155,12 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('triggerCauseway', function(data) {
-		// oscClient.send('/causeway/triggerCauseway', socket.id);
 		if(audioControllerID) {
 				io.to(audioControllerID).emit('/causeway/triggerCauseway', {id: socket.id}, 1);
     }
 	});
 
 	socket.on('triggerPitch', function(data) {
-		// oscClient.send('/causeway/triggerPitch', socket.id);
 		if(audioControllerID) {
         io.to(audioControllerID).emit('/causeway/triggerPitch', {id: socket.id}, 1);
     }
@@ -231,8 +207,6 @@ io.sockets.on('connection', function (socket) {
 	sendSection = function (sect) {
 		var title = getSection(sect);
 		io.sockets.emit('setSection', {sect: sect, title: title});
-		// oscClient.send('/setSection', sect, title);
-		// oscClient.send('/causeway/currentSection', sect);
 		if(audioControllerID) {
 				io.to(audioControllerID).emit('/causeway/currentSection', {section: sect, title: title}, 1);
 				// console.log("Section sent", sect);
