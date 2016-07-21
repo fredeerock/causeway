@@ -92,11 +92,8 @@ io.sockets.on('connection', function (socket) {
 		socket.userLocation = userLocation;
 		socket.userColor = userColor;
 		socket.userNote = userNote;
-		// .emit to send message back to caller.
 		socket.emit('chat', 'SERVER: You have connected. Hello: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
-		// .broadcast to send message to all sockets.
-		//socket.broadcast.emit('chat', 'SERVER: A new user has connected: ' + username + " " + socket.id + 'Color: ' + socket.userColor);
-		// socket.emit('bump', socket.username, "::dude::");
+
 		var title = getSection(currentSection);
 		
 		if(username == "a_user") {
@@ -104,7 +101,6 @@ io.sockets.on('connection', function (socket) {
 		}
 
 		socket.emit('setSection', {sect: currentSection, title: title});
-		// io.sockets.emit('setSection', {sect: sect, title: title});
 		if(username == "a_user") {
 			if(audioControllerID) {
 					io.to(audioControllerID).emit('/causeway/registerUser', {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote}, 1);
@@ -126,6 +122,11 @@ io.sockets.on('connection', function (socket) {
 	socket.on('tap', function(data) {
 		// console.log("Data: ", data.inspect);
 		socket.broadcast.emit('tapped', socket.username, 1);
+	});
+	
+	socket.on('interactionTrail', function(data) {
+		console.log("Received interactionTrail: "+ data);
+		// send somewhere?  perhaps theatre?
 	});
 
 	socket.on('shareToggle', function(data) {
@@ -153,6 +154,13 @@ io.sockets.on('connection', function (socket) {
 				// console.log("Item", data);
     }
 	});
+	
+	socket.on('nextChord', function(data) {
+			if(audioControllerID) {
+				io.to(audioControllerID).emit('/causeway/nextChord', {id: socket.id}, 1);
+	    }
+		socket.broadcast.emit('triggerNextChord', data);
+	});
 
 	socket.on('triggerCauseway', function(data) {
 		if(audioControllerID) {
@@ -165,6 +173,66 @@ io.sockets.on('connection', function (socket) {
         io.to(audioControllerID).emit('/causeway/triggerPitch', {id: socket.id}, 1);
     }
 	});
+	
+	
+				// TRIGGER SECTIONS //
+	socket.on('triggerBBCollapse', function(data) {
+		if(audioControllerID) {
+			io.to(audioControllerID).emit('/causeway/triggerBBCollapse', {id: socket.id}, 1);
+    }
+		socket.broadcast.emit('triggerBBCollapse', data);
+	});
+
+	socket.on('triggerSmolder', function(data) {
+		if(audioControllerID) {
+			io.to(audioControllerID).emit('/causeway/triggerSmolder', {id: socket.id}, 1);
+    }
+		socket.broadcast.emit('triggerSmolder', data);
+	});
+
+	socket.on('triggerWhoBrought', function(data) {
+		if(audioControllerID) {
+			io.to(audioControllerID).emit('/causeway/triggerWhoBrought', {id: socket.id}, 1);
+    }
+		socket.broadcast.emit('triggerWhoBrought', data);
+	});
+
+	socket.on('triggerCollide', function(data) {
+		if(audioControllerID) {
+			io.to(audioControllerID).emit('/causeway/triggerCollide', {id: socket.id}, 1);
+    }
+		socket.broadcast.emit('triggerCollide', data);
+	});
+
+	socket.on('triggerCricket', function(data) {
+		if(audioControllerID) {
+			io.to(audioControllerID).emit('/causeway/triggerCricket', {id: socket.id}, 1);
+    }
+		socket.broadcast.emit('triggerCricket', data);
+	});
+
+	socket.on('triggerSequins', function(data) {
+		if(audioControllerID) {
+			io.to(audioControllerID).emit('/causeway/triggerSequins', {id: socket.id}, 1);
+    }
+		socket.broadcast.emit('triggerSequins', data);
+	});
+
+	socket.on('triggerBreath', function(data) {
+		if(audioControllerID) {
+			io.to(audioControllerID).emit('/causeway/triggerBreath', {id: socket.id}, 1);
+    }
+		socket.broadcast.emit('triggerBreath', data);
+	});
+
+	socket.on('triggerSonnet', function(data) {
+		if(audioControllerID) {
+     	io.to(audioControllerID).emit('/causeway/triggerSonnet', {id: socket.id}, 1);
+    }
+		socket.broadcast.emit('triggerSonnet', data);
+	});
+	
+	
 
 
 	// Return random user name
