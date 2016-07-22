@@ -41,7 +41,7 @@
 		<script>
 			console.log("window.location.orgin:", window.location.origin);
 			//var socket = io.connect(window.location.origin, {path: '/socket.io'}); 
-			var socket = io.connect(window.location.origin, {transports: ['websocket']}); 
+			var socket = io.connect(window.location.origin, {path: '/m/socket.io'}); 
 
 			var myColor = getRandomColor();
 			var myLocation = [0.5, 0.5];	// Default centered
