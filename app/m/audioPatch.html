@@ -1,7 +1,7 @@
 <html> 
 <head>
 	<meta charset="utf-8">
-	<title>Diamonds</title>
+	<title>Causeway</title>
 	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
@@ -9,7 +9,7 @@
 
 	<link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
 
-	<script src="/m/socket.io/socket.io.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<!-- <script type="text/javascript" src="js/Tone.min.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
@@ -17,18 +17,22 @@
 <body>
 	
 	<button onclick="socket.emit('triggerBeginning')">Beginning</button>
-	<button onclick="socket.emit('nextChord')">New Chords</button>
-	<button onclick="socket.emit('triggerUtopalypse')">Utopia is our Apocalypse</button>
-	<button onclick="socket.emit('triggerDiamonds')">Diamonds in Distopia</button>
+	<button onclick="socket.emit('nextChord')">Next Chord</button>
+	<button onclick="socket.emit('triggerBBCollapse')">bridge blessing collapse</button>
+	<button onclick="socket.emit('triggerSmolder')">still smoldering precipitation</button>
+	<button onclick="socket.emit('triggerWhoBrought')">Who has brought this one here?</button>
+	<button onclick="socket.emit('triggerCollide')">two storms collide</button>
+	<button onclick="socket.emit('triggerCricket')">that cricket never finishes</button>
+	<button onclick="socket.emit('triggerSequins')">satin sequins</button>
+	<button onclick="socket.emit('triggerBreath')">breath of the Mississippi</button>
+	<button onclick="socket.emit('triggerSonnet')">A sonnet of immolation...</button>
 	<button onclick="socket.emit('triggerEnding')">Ending</button>
 	
 	
 
 <script>
 
-	// var socket = io.connect('127.0.0.1:8000');
-	var socket = io.connect(window.location.origin, {path: '/m/socket.io'});
-	// var socket = io.connect('https://atlab.cct.lsu.edu/', { path: '/causeway/socket.io' });
+	var socket = io.connect(window.location.origin, {path: '/socket.io'});
 	
 	var myColor = getRandomColor();
 	var myLocation = [0.5, 0.5];	// Default centered
@@ -37,8 +41,9 @@
 	
 	socket.on('setSection', function(data) {
 		console.log("The section is now: " + data.title);
+		window.max.outlet('section'+" "+ data.title);
 	});
-	
+
 	socket.on('triggerBeginning', function(data) {
 		window.max.outlet('playKepler');
 	});
@@ -47,37 +52,82 @@
 		window.max.outlet('nextChord');
 	});
 
-	socket.on('triggerUtopalypse', function(data) {
-		window.max.outlet('playUtopalypse');
-	});
-
-	socket.on('triggerDiamonds', function(data) {
-		window.max.outlet('playDiamonds');
-	});
-
 	socket.on('triggerEnding', function(data) {
 		window.max.outlet('playEnding');
 	});
-	
+
 	socket.on('/causeway/currentSection', function(data) {
-		window.max.outlet('/causeway/currentSection', data.section, data.title);
+		window.max.outlet('/causeway/currentSection'+" "+ data.section+" "+ data.title);
 	});
-	
+
 	socket.on('/causeway/triggerPitch', function(data) {
-		window.max.outlet('/causeway/triggerPitch', data.id);
+		window.max.outlet('/causeway/triggerPitch'+" "+ data.id);
 	});
-	
+
 	socket.on('/causeway/triggerCauseway', function(data) {
-		window.max.outlet('/causeway/triggerCauseway', data.id);
+		window.max.outlet('/causeway/triggerCauseway'+" "+ data.id);
 	});
-	
+
 	socket.on('/causeway/phrase/number', function(data) {
-		window.max.outlet('/causeway/phrase/number', data.id, data.item);
+		window.max.outlet('/causeway/phrase/number'+" "+ data.id+" "+ data.item);
 	});
-	
+
 	socket.on('/causeway/registerUser', function(data) {
-		window.max.outlet('/causeway/registerUser', data.id, data.color, data.locationX, data.locationY, data.note);
+		window.max.outlet('/causeway/registerUser'+ " "+ data.id+" "+ data.color+" "+ data.locationX+" "+ data.locationY+" "+ data.note);
 	});
+
+	socket.on('/causeway/triggerBBCollapse', function(data) {
+		window.max.outlet('/causeway/triggerBBCollapse'+" "+ data.id);
+	});
+
+	socket.on('/causeway/triggerSmolder', function(data) {
+		window.max.outlet('/causeway/triggerSmolder'+" "+ data.id);
+	});
+
+	socket.on('/causeway/triggerWhoBrought', function(data) {
+		window.max.outlet('/causeway/triggerWhoBrought'+" "+ data.id);
+	});
+
+	socket.on('/causeway/triggerCollide', function(data) {
+		window.max.outlet('/causeway/triggerCollide'+" "+ data.id);
+	});
+
+	socket.on('/causeway/triggerCricket', function(data) {
+		window.max.outlet('/causeway/triggerCricket'+" "+ data.id);
+	});
+
+	socket.on('/causeway/triggerSequins', function(data) {
+		window.max.outlet('/causeway/triggerSequins'+" "+ data.id);
+	});
+
+	socket.on('/causeway/triggerBreath', function(data) {
+		window.max.outlet('/causeway/triggerBreath'+" "+ data.id);
+	});
+
+	socket.on('/causeway/triggerSonnet', function(data) {
+		window.max.outlet('/causeway/triggerSonnet'+" "+ data.id);
+	});
+
+	
+// 	socket.on('/causeway/currentSection', function(data) {
+// 		window.max.outlet('/causeway/currentSection', data.section, data.title);
+// 	});
+// 	
+// 	socket.on('/causeway/triggerPitch', function(data) {
+// 		window.max.outlet('/causeway/triggerPitch', data.id);
+// 	});
+// 	
+// 	socket.on('/causeway/triggerCauseway', function(data) {
+// 		window.max.outlet('/causeway/triggerCauseway', data.id);
+// 	});
+// 	
+// 	socket.on('/causeway/phrase/number', function(data) {
+// 		window.max.outlet('/causeway/phrase/number', data.id, data.item);
+// 	});
+// 	
+// 	socket.on('/causeway/registerUser', function(data) {
+// 		window.max.outlet('/causeway/registerUser', data.id, data.color, data.locationX, data.locationY, data.note);
+// 	});
 
 	function getRandomColor() {
 		var letters = '0123456789ABCDEF'.split('');
